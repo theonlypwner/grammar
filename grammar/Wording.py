@@ -161,10 +161,10 @@ def generate(corrections, corrected, user):
     # 65% chance to use 2nd person instead of 3rd
     if second_person:  # pragma: no cover
         # Invert the subject so that we address one personally
-        result = '@%s, %s you %s' % (user, clause, predicate)
+        result = '%s, %s you %s' % (user, clause, predicate)
     # No subject inversion, but we have to make the first letter uppercase
     else:  # pragma: no cover
-        result = '%s @%s %s' % (
+        result = '%s %s %s' % (
             clause[0].upper() + clause[1:], user, predicate)
     # Do we need to check? Any space for why?
     # at least 3 characters have to be added

@@ -31,7 +31,7 @@ Usage
 
 	# For each text sample,
 	if self.parser.load_text(tweet['text'], **options):
-		tweet = self.parser.generate_wording(tweet['username'])
+		tweet = self.parser.generate_wording('@' + tweet['username'])
 		# ... publish the tweet
 	else:
 		# no errors detected

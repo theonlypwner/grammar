@@ -324,7 +324,7 @@ class ParserFunctions(unittest.TestCase):
         """Verify that wording can be generated without failing"""
         self.positive(
             "Their is and your don't supposed to! (blah) They think their is.")
-        logging.debug(self.parser.generate_wording('')
+        logging.debug(self.parser.generate_wording('@@')
                       .encode('ascii', 'replace'))
         # not implemented yet
         self.assertRaises(NotImplementedError,
