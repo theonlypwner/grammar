@@ -27,8 +27,8 @@ class CorrectionManager(object):
 
     def load_text(self, text, **options):
         """Load some text into the state and return whether there are detections"""
-        text = transform(text, **options)
-        self.sequence = SequenceManager(partitionize(text))
+        self.reset()
+        self.sequence = SequenceManager(partitionize(transform(text, **options)))
         # Do checks
         self.do_checks_all()
         # Were there any corrections?

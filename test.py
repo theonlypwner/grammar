@@ -28,7 +28,6 @@ class ParserFunctions(unittest.TestCase):
         self.parser = grammar.CorrectionManager()
 
     def load(self, text, **kwargs):
-        self.parser.reset()
         options = self.options
         options.update(kwargs)
         if self.parser.load_text(text, **options):
