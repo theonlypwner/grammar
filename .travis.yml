@@ -8,6 +8,9 @@ python:
 matrix:
   allow_failures:
     - python: "pypy"
+branches:
+  only:
+    - master
 install: pip install coveralls
 script:
   - coverage run --branch --source=grammar test.py
