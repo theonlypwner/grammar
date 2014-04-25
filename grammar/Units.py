@@ -249,8 +249,7 @@ class SequenceUnit(object):
             return self.new_text
         return self.original
 
-    def __str__(self):
-        return self.get_final()
+UnitToString = SequenceUnit.get_final
 
 
 class Space(SequenceUnit):  # word separators - can also have punctuation

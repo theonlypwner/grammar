@@ -47,12 +47,14 @@ class ParserFunctions(unittest.TestCase):
     # Misc Tests
     def test_wording_first_cap(self):
         self.assertEqual(grammar.Wording.first_cap('abc'), 'Abc')
-        self.assertEqual(grammar.Wording.first_cap('23-234234{:[[;;""]:]abc'), '23-234234{:[[;;""]:]Abc')
+        self.assertEqual(grammar.Wording.first_cap(
+            '23-234234{:[[;;""]:]abc'), '23-234234{:[[;;""]:]Abc')
 
     def test_wording_english_join(self):
         self.assertEqual(grammar.Wording.english_join(['a']), 'a')
         self.assertEqual(grammar.Wording.english_join(['a', 'b']), 'a and b')
-        self.assertEqual(grammar.Wording.english_join(['a', 'b', 'c']), 'a, b and c')
+        self.assertEqual(
+            grammar.Wording.english_join(['a', 'b', 'c']), 'a, b and c')
 
     def test_transform(self):
         """Test the text transformations."""
@@ -290,6 +292,9 @@ class ParserFunctions(unittest.TestCase):
         self.negative("whom they say")
         # Restrictions: unrecognized nouns
         self.negative("blah whom is")
+
+    def test_unicode(self):
+        self.positive(u"… → their is …", u"→ [there] is")
 
     def test_case(self):
         # lowercase detection

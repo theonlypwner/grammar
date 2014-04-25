@@ -7,6 +7,7 @@ from . import Wording
 from .Transformers import partitionize
 from .Transformers import transform
 from .Units import SequenceManager
+from .Units import UnitToString
 
 
 class CorrectionManager(object):
@@ -151,15 +152,15 @@ class CorrectionManager(object):
                 if i != sequence_len and current_end is not None and this_start <= current_end + 4:
                     # merge ranges
                     current_correction.extend(
-                        map(str, sequence[current_end + 1: i]))
+                        map(UnitToString, sequence[current_end + 1: i]))
                     if sequence[current_end].flags != 1:
                         current_correction.append('[')
-                    current_correction.append(str(sequence[i]))
+                    current_correction.append(UnitToString(sequence[i]))
                     if i + 2 == sequence_len or sequence[i + 2].flags != 1:
                         current_correction.append(']')
                     if this_end > current_end:
                         current_correction.extend(
-                            map(str, sequence[i + 1:this_end + 1]))
+                            map(UnitToString, sequence[i + 1:this_end + 1]))
                         current_end = this_end
                 else:
                     # previous range
@@ -174,11 +175,11 @@ class CorrectionManager(object):
                     if i != sequence_len:
                         # set to current range
                         current_correction = list(
-                            map(str, sequence[this_start: i])) + ['[', str(sequence[i])]
+                            map(UnitToString, sequence[this_start: i])) + ['[', UnitToString(sequence[i])]
                         if i + 2 == sequence_len or sequence[i + 2].flags != 1:
                             current_correction.append(']')
                         current_correction.extend(
-                            list(map(str, sequence[i + 1:this_end + 1])))
+                            list(map(UnitToString, sequence[i + 1:this_end + 1])))
                         current_end = this_end
         return bool(self.corrections)  # len(self.corrections) > 0
 
