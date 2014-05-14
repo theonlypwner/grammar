@@ -17,11 +17,13 @@ class ParserFunctions(unittest.TestCase):
     options = {
         'do_decode_html': False,
         'do_ellipsis': False,
-        'do_quotations': True,  # uses regex
-        'do_askfm': False,  # uses regex
-        'do_fixcaps': False,  # uses regex
-        'do_fixi': False,  # uses regex
-        'do_fixnewline': True,  # uses regex
+        # the following use regex
+        'do_quotations': True,
+        'do_askfm': False,
+        #'do_links': False,
+        'do_fixcaps': False,
+        'do_fixi': False,
+        'do_fixnewline': True,
     }
 
     def setUp(self):
@@ -63,9 +65,11 @@ class ParserFunctions(unittest.TestCase):
             options[k] = True
         # Check helper function
 
-        def check_transform(text, expected):
+        def check_transform(text, expected, **extra_options):
+            options_ = options
+            options_.update(extra_options)
             self.assertEqual(
-                grammar.Transformers.transform(text, **options), expected)
+                grammar.Transformers.transform(text, **options_), expected)
         # do_decode_html
         check_transform('&#39;&quot;&gt;&lt;&amp;', '\'"><&')
         # do_ellipsis
@@ -88,6 +92,11 @@ class ParserFunctions(unittest.TestCase):
                         "I don't know how to capitalize I")
         # do_fixnewline
         check_transform('1\n2 \n 3', '1 / 2 / 3')
+
+        # do_links
+        check_transform('http://example.invalid-domain', u'…', do_links=True)
+        check_transform('Visit http://example.invalid-domain when you can',
+                        u'Visit … when you can', do_links=True)
 
     # Parser Tests
     def test_load_regular(self):

@@ -61,12 +61,23 @@ REGEX_FIXI = re.compile(
     r"(?:(?<=^)|(?<=[ ,;.]))i(|'(?:[dD]|[lL][lL])(?:'[vV][eE])?|'[mM]|'[vV][eE])(?=$|[ ,;.])")
 
 
-def REGEX_FIXNL_REPL(mo):
-    return ' / '
 REGEX_FIXNL = re.compile(r" *[\r\n]+ *")
+REGEX_FIXNL_REPL = ' / '
 
 
-def transform(text, do_decode_html=False, do_ellipsis=False, do_quotations=False, do_askfm=False, do_fixcaps=False, do_fixi=False, do_fixnewline=False, **kwargs):
+REGEX_LINKS = re.compile(r"https?://[\w.-]+(?:/[\w.-]*(?:\?.*)?)?")
+REGEX_LINKS_REPL = u"…"
+
+
+def transform(text, do_decode_html=False,
+              do_ellipsis=False,
+              do_quotations=False,
+              do_askfm=False,
+              do_links=False,
+              do_fixcaps=False,
+              do_fixi=False,
+              do_fixnewline=False,
+              **kwargs):
     """Perform transformations on some text"""
     # Decode &[...]; -> [char]
     if do_decode_html:
@@ -84,6 +95,9 @@ def transform(text, do_decode_html=False, do_ellipsis=False, do_quotations=False
     # Remove ask.fm question quotations
     if do_askfm:
         text = REGEX_QUOTATION_ASKFM.sub(REGEX_QUOTATION_ASKFM_REPL, text)
+    # Trim links
+    if do_links:
+        text = REGEX_LINKS.sub(REGEX_LINKS_REPL, text)
     # Detect content entirely written in ALLCAPS or in Title Case Text
     if do_fixcaps:
         words_total = 0
