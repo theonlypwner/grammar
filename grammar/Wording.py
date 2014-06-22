@@ -27,7 +27,7 @@ def english_join(x, conjunction='and'):
 # Correction reasons
 why_reasons = {
     'its': (u"‘its’ belongs to ‘it’", u"‘its’ belongs to ‘it’; ‘it's’ means ‘it is’",),
-    'your': (u"‘your’ doesn't mean ‘you are’; ‘your’ does", u"‘your’ belongs to ‘you’",),
+    'your': (u"‘your’ doesn't mean ‘you are’; ‘you're’ does", u"‘your’ belongs to ‘you’",),
     'its_po': (u"‘it's’ doesn't belong to ‘it’; ‘its’ does", u"‘it's’ means ‘it is’",),
     'your_po': (u"‘you're’ doesn't belong to ‘you’; ‘your’ does", u"‘you're’ means ‘you are’",),
     'there_their': (u"‘there’ doesn't belong to ‘them’; ‘their’ does",),
