@@ -165,8 +165,10 @@ class ParserFunctions(unittest.TestCase):
         self.negative("the difference between their, there, and they're is")
         self.negative("the difference between there, their, and they're is")
         # Exception 2
+        self.negative("what they're is good")
+        # Exception 3
         self.negative("they're is they are")
-        self.negative("they're, aren't they?")  # 2b
+        self.negative("they're, aren't they?")  # 3
         # Boundary check: _ <be>
         self.negative("See, they're")
 
