@@ -18,7 +18,7 @@ This is a Python parser that corrects some common grammar errors.
 License
 ============
 
-The code is licensed under a modified version of the AGPL. See LICENSE.txt and agpl-3.0.txt for more details.
+The code is licensed under a **modified** version of the AGPL. See LICENSE.txt and agpl-3.0.txt for more details.
 
 ============
 Usage
