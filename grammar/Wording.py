@@ -46,10 +46,8 @@ why_reasons = {
     'whom': (u"‘whom’ is not nominative", u"‘whom’ isn't in subjective case"),
 }
 # More Constants
-modals_intent = ('should', 'ought to', 'could',
-                 'can', 'meant to', 'intended to')
-modals_intent_perfect = ('should have', 'ought to have',
-                         'could have', 'meant to have', 'intended to have')
+modals_infinitive = ('should', 'ought to', 'could', 'can', 'meant to', 'intended to')
+modals_perfect = ('should have', 'ought to have', 'could have')
 said_past = ('used', 'said', 'tweeted', 'posted')  # (simple [past) perfect]
 said_infinitive = ('use', 'say', 'tweet', 'post')  # without 'to'
 tweet_noun = ('a tweet', 'a post', 'a status', 'a message',
@@ -98,8 +96,8 @@ def generate(corrections, corrected, user):
     message_alter = [
         # can_override, subclause, new_modals, new_verbs
         # NOTE: had = past participle, 0 = simple past
-        # (False, None, modals_intent_perfect, said_past), # (default)
-        (False, None, modals_intent, said_infinitive),
+        # (False, None, modals_perfect, said_past), # (default)
+        (False, None, modals_infinitive, said_infinitive),
         (True, 'it %s %s better if' %
          (random.choice([
              'could', 'might', 'would']), random.choice(['have been', 'be'])), ('had',), said_past),
@@ -112,7 +110,7 @@ def generate(corrections, corrected, user):
             random.choice(
                 ['an error', 'a mistake', 'a solecism', 'a typo']),
             random.choice(
-                modals_intent if use_infinitive else modals_intent_perfect)
+                modals_infinitive if use_infinitive else modals_perfect)
         ),), said_infinitive if use_infinitive else said_past),
         (False, None, ('%s%s %s and %s' % (
             inflected_have_optional,
@@ -121,14 +119,14 @@ def generate(corrections, corrected, user):
                  'miswritten' if use_inflected_have else 'miswrote', 'mistyped']),
             random.choice(tweet_noun),
             random.choice(
-                modals_intent if use_infinitive else modals_intent_perfect)
+                modals_infinitive if use_infinitive else modals_perfect)
         ),), said_infinitive if use_infinitive else said_past),
         # (Must?, 'it is', ('who should',), said_infinitive), # cleft
     ]
     # Build the sentence!
     message = random.choice(MESSAGE)
     clause = message[0]
-    modals = modals_intent_perfect
+    modals = modals_perfect
     verbs = said_past
     # 70% chance to use "that"
     if message[1] and 70 > random.randrange(0, 100):  # pragma: no cover
