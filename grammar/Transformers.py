@@ -6,7 +6,7 @@
 from .Units import Space
 from .Units import Word
 
-SPACECHARS = r' ,;:()[]{}.!?'  # no '-' dashes; they form compound words
+SPACECHARS = r' ,;:()[]{}.!?/'  # no '-' dashes; they form compound words
 
 
 def partitionize(text):

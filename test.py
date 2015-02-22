@@ -164,6 +164,9 @@ class ParserFunctions(unittest.TestCase):
         # Exception 1
         self.negative("the difference between their, there, and they're is")
         self.negative("the difference between there, their, and they're is")
+        # Exception 1b
+        self.negative("their / there / they're is sometimes confused")
+        self.negative("there / their / they're is sometimes confused")
         # Exception 2
         self.negative("what they're is good")
         # Exception 3

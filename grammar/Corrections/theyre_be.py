@@ -3,6 +3,7 @@
 from .be_noun import SET_BE
 from .of import SET_MODAL as SET_OF_MODAL
 SET_THERETHEIR = set(['there', 'their'])
+SET_THERETHEIRAND = set(['there', 'their', 'and'])
 SET_MODAL_SINGULAR = set(['is', "isn't"])
 # 'is' is already checked
 SET_MODAL = SET_BE | SET_OF_MODAL
@@ -21,12 +22,19 @@ def do(self, cur):
     # Removed: Be {there day} and night
     # Removed: "they're be" is full of improper usage
     """
-    
-    if self.sequence.prev_has_continuous(1):
-        # Exception 1: the difference between their/there, <, and {they're is}
-        if (self.sequence.prev_has(2) and self.sequence.prev_word(1).word_lower == 'and' and
-                self.sequence.prev_word(2).word_lower in SET_THERETHEIR):
-                return
+
+    if self.sequence.prev_has_continuous(1, 0, True):
+        # Exception 1: the difference between (their/there), (there/their)?, and {they're is}
+        # Exception 1b: (their/there) / (there/their) / {they're is} sometimes confused
+        # This exception set has three forms:
+        # 1. T / T / _
+        # 2. T and _
+        # 3. T, T, and _ # covered by #2
+        if (self.sequence.prev_has_continuous(2, 1, True) and
+                self.sequence.prev_word(2).word_lower in SET_THERETHEIR and
+                self.sequence.prev_word(1).word_lower in SET_THERETHEIRAND):
+            return
+
         # Exception 2: what {they're is}
         if self.sequence.prev_word(1).word_lower == 'what':
             return

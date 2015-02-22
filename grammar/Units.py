@@ -255,7 +255,7 @@ UnitToString = SequenceUnit.get_final
 class Space(SequenceUnit):  # word separators - can also have punctuation
 
     def __init__(self, spacer):
-        # (space) does not break
+        # (space) and '/' do not break
         self.sentenceBreaker = ('.' in spacer) or (
             '!' in spacer) or ('?' in spacer)
         self.anyBreaker = self.sentenceBreaker or (',' in spacer) or (';' in spacer) or (':' in spacer) or (
@@ -298,7 +298,7 @@ class Word(SequenceUnit):
         if self.flags != 1:
             self.flags = 2
 
-    NEAR_EXCEPTIONS = set(['', '/', u"…"])
+    NEAR_EXCEPTIONS = set(['', u"…"])
 
     def is_near(self):
         """Returns whether this word may be included as a "near" word"""
