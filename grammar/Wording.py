@@ -78,6 +78,8 @@ MESSAGE = [
     ('I think', True),
     ('I believe', True),
     ('I reckon', True),
+    ('I suppose', True),
+    ('I suspect', True),
     ('I feel', True),
     ('it seems to be the case that', False),
     ('it appears to be the case that', False),
