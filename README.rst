@@ -6,7 +6,7 @@ grammar
 	:target: https://travis-ci.org/theonlypwner/grammar
 	:alt: Build status
 
-.. image:: https://coveralls.io/repos/theonlypwner/grammar/badge.png?branch=master
+.. image:: https://coveralls.io/repos/theonlypwner/grammar/badge.svg?branch=master
 	:target: https://coveralls.io/r/theonlypwner/grammar?branch=master
 	:alt: Coverage Status
 
