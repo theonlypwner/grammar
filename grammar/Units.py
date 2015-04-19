@@ -260,7 +260,7 @@ class Space(SequenceUnit):  # word separators - can also have punctuation
             '!' in spacer) or ('?' in spacer)
         self.anyBreaker = self.sentenceBreaker or (',' in spacer) or (';' in spacer) or (':' in spacer) or (
             '(' in spacer) or (')' in spacer) or ('[' in spacer) or (']' in spacer) or ('{' in spacer) or ('}' in spacer)
-        return super(Space, self).__init__(spacer)
+        super(Space, self).__init__(spacer)
 
 
 class Word(SequenceUnit):
