@@ -89,9 +89,9 @@ MESSAGE = [
 def generate(corrections, corrected, user):
     """Generate a tweet message for the purpose of correcting a user."""
     # Random wording
-    second_person = 65 > random.randrange(0, 100)
-    use_infinitive = 50 > random.randrange(0, 100)  # rather than perfect
-    use_inflected_have = 50 > random.randrange(0, 100)
+    second_person = 13 >= random.randrange(20)
+    use_infinitive = 50 >= random.randrange(100)  # rather than perfect
+    use_inflected_have = 50 >= random.randrange(100)
     inflected_have = 'have' if second_person else 'has'
     inflected_have_optional = (
         inflected_have + ' ') if use_inflected_have else ''
@@ -130,15 +130,15 @@ def generate(corrections, corrected, user):
     clause = message[0]
     modals = modals_perfect
     verbs = said_past
-    # 70% chance to use "that"
-    if message[1] and 70 > random.randrange(0, 100):  # pragma: no cover
+    # 50% chance to use "that"
+    if message[1] and 1 == random.randrange(2):  # pragma: no cover
         clause += ' that'
     # Alter it! (40%)
-    if 40 > random.randrange(0, 100):  # pragma: no cover
+    if 2 >= random.randrange(5):  # pragma: no cover
         message_alter = random.choice(message_alter)
         if message_alter[1]:
             # 50% chance to bypass the first clause, if possible
-            if message_alter[0] and 50 > random.randrange(0, 100):
+            if message_alter[0] and 1 == random.randrange(2):
                 clause = message_alter[1]
             else:
                 clause += ' ' + message_alter[1]
@@ -158,12 +158,14 @@ def generate(corrections, corrected, user):
         predicate += verbs + ' '
     # jump that quote
     predicate += '%s instead.' % (english_join(tuple(map(u'“{0}”'.format, corrections))))
-    # 65% chance to use 2nd person instead of 3rd
-    if second_person:  # pragma: no cover
-        # Invert the subject so that we address one personally
+    # 2nd person instead of 3rd (65%)
+    if second_person and 17 >= random.randrange(20):  # pragma: no cover
+        # Invert the subject so that we address one personally (85%)
         result = '%s, %s you %s' % (user, clause, predicate)
     # No subject inversion, but we have to make the first letter uppercase
     else:  # pragma: no cover
+        if second_person:
+            user = 'you, %s,' % (user)
         result = '%s %s %s' % (
             clause[0].upper() + clause[1:], user, predicate)
     # Do we need to check? Any space for why?
