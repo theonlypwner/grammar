@@ -6,8 +6,8 @@ grammar
 	:target: https://travis-ci.org/theonlypwner/grammar
 	:alt: Build status
 
-.. image:: https://coveralls.io/repos/theonlypwner/grammar/badge.svg?branch=master
-	:target: https://coveralls.io/r/theonlypwner/grammar?branch=master
+.. image:: https://coveralls.io/repos/github/theonlypwner/grammar/badge.svg?branch=master
+	:target: https://coveralls.io/github/theonlypwner/grammar?branch=master
 	:alt: Coverage Status
 
 .. image:: https://www.codacy.com/project/badge/1a50eeb1918e4d76912d05bf468c93e0
