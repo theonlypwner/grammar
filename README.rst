@@ -14,6 +14,10 @@ grammar
 	:target: https://www.codacy.com/app/victor/grammar
 	:alt: Codacy Badge
 
+.. image:: https://landscape.io/github/theonlypwner/grammar/master/landscape.svg?style=flat
+   :target: https://landscape.io/github/theonlypwner/grammar/master
+   :alt: Code Health
+
 @_grammar_ might correct your grammar on Twitter!
 
 This is a Python parser that corrects some common grammar errors.
