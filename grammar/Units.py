@@ -311,6 +311,12 @@ class Word(SequenceUnit):
     def is_article(self):
         return self.word_lower in Sets.SET_ARTICLE
 
+    def is_agent(self):
+        # possible issues
+        #  - false negatives: actor, actors
+        #  - false positives: alter, deter, enter, prefer, ...
+        return self.word_lower.endswith('er') or self.word_lower.endswith('ers')
+
     def is_determiner(self):
         return self.word_lower in Sets.SET_DETERMINER
 

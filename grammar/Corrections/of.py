@@ -69,9 +69,16 @@ def do(self, cur):
     self.sequence.prev_space(1).replace('')  # collapse space
     cur.replace("'ve")
     # Fix: 've <verb_past_simple> -> <verb_past_perfect>
-    if next_word_1 and next_word_1.word_lower in FIX_past_to_participle:
-        next_word_1.replace(
-            FIX_past_to_participle[next_word_1.word_lower])
+    base_verb = next_word_1
+    if next_word_1.word_lower == 'not':
+        # this check can be moved up, especially if needed by other exceptions
+        if self.sequence.next_has_continuous(2):
+            base_verb = self.sequence.next_word(2)
+        else:
+            base_verb = None
+    if base_verb and base_verb.word_lower in FIX_past_to_participle:
+        base_verb.replace(
+            FIX_past_to_participle[base_verb.word_lower])
 
 FIX_past_to_participle = {
     # 'was': 'been', # be

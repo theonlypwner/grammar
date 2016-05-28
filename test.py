@@ -119,18 +119,22 @@ class ParserFunctions(unittest.TestCase):
     def test_youre_noun(self):
         self.positive("of you're own!", "of [your] own!")
         # Exception 1
-        self.negative("You're day dreamers")
         self.negative("You're day dreaming")
+        self.negative("You're day drinking")
+        self.negative("You're day dreamers")
         # Exception 2
+        self.negative("you're life changing!")
         self.negative(
             "You're life savers, you're life wasters, you're life changers!")
-        self.negative("you're life changing!")
         # Exception 3
         self.negative("You're life.")
         self.negative("You're life!")
         self.negative("You're life")
         # Boundary check: _ (1)
         self.negative("See, you're")
+        self.negative("Note that you're.")
+        self.negative("you're.")
+        self.negative("you're")
 
     def test_its_own(self):
         self.positive("sees it's own", "sees [its] own")
@@ -178,6 +182,11 @@ class ParserFunctions(unittest.TestCase):
     def test_their_modal(self):
         self.positive("Their is", "[There] is")
         self.positive("Their must be something!", "[There] must be something!")
+        # Exception
+        self.negative("the difference between there/they're/their is")
+        self.negative("Those who know the difference between there/they're/their are.")
+        self.negative("the difference between they're/there/their is")
+        self.negative("Those who know the difference between they're/there/their are.")
         # Boundary check: _ (1)
         self.negative("their")
         # Restriction: _ <modal>
@@ -221,7 +230,7 @@ class ParserFunctions(unittest.TestCase):
                       "did this and [then] I did that")
         # Exception 1
         self.negative("the difference between then and than is")
-        # Exception: 2
+        # Exception 2
         self.negative("better than something and than something else")
         self.negative("Is it more than they do or than I do?")
         # Boundary check: (1) <and/but/yet> _
@@ -233,6 +242,8 @@ class ParserFunctions(unittest.TestCase):
         self.positive("I should not of done it", "I should not['ve] done it")
         self.positive("I shouldn't of done it", "I shouldn't['ve] done it")
         self.positive("I should of went there", "I should['ve gone] there")
+        self.positive("I should not of went there", "I should not['ve gone] there")
+        self.positive("I should of not went there", "I should['ve] not [gone] there")
         # Exception 1
         self.negative("He could of course do")
         # Exception 2
@@ -244,7 +255,7 @@ class ParserFunctions(unittest.TestCase):
         self.negative("no might of him")
         # Exception 3b
         self.negative("might of the people")
-        # Exception: 4
+        # Exception 4
         self.negative("more of this than they would of that")
         # Boundary check: (1) (not)? _ (1)
         self.negative("of")
