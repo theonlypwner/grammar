@@ -5,16 +5,15 @@
 
 
 class Sets:
-    SET_ARTICLE = set(['a', 'an', 'the'])
+    SET_ARTICLE = {'a', 'an', 'the'}
 
-    SET_CONJUNCTION_COORDINATING = set(
-        ['for', 'and', 'nor', 'but', 'or', 'yet', 'so'])
+    SET_CONJUNCTION_COORDINATING = {'for', 'and', 'nor', 'but', 'or', 'yet', 'so'}
 
-    SET_CONJUNCTION_SUBORDINATING = set(['as'])
+    SET_CONJUNCTION_SUBORDINATING = {'as'}
 
     SET_CONJUNCTION = SET_CONJUNCTION_COORDINATING | SET_CONJUNCTION_SUBORDINATING
 
-    SET_PREPOSITION_SHORT = set([
+    SET_PREPOSITION_SHORT = {
         'aboard',
         'about',
         'above',
@@ -139,25 +138,23 @@ class Sets:
         'within',
         'without',
         # 'worth', # also noun
-    ])
+    }
 
-    SET_PREPOSITION_EXTENSION = set(['over', 'to'])
+    SET_PREPOSITION_EXTENSION = {'over', 'to'}
 
-    SET_PRONOUN_PERSONAL = set([
+    SET_PRONOUN_PERSONAL = {
         'i', 'we', 'you', 'he', 'she', 'it', 'they',  # subjective
         'me', 'us', 'you', 'him', 'her', 'it', 'them',  # objective
         # reflexive
         'myself', 'ourselves', 'yourself', 'yourselves', 'himself', 'herself', 'itself', 'themselves',
         'myselves', 'ourself', 'themself',  # *reflexive
-    ])
+    }
 
-    SET_DETERMINER_POSSESSIVE = set(
-        ['my', 'our', 'thy', 'your', 'his', 'her', 'its', 'their'])
-    SET_PRONOUN_POSSESSIVE = set(
-        ['mine', 'ours', 'thine', 'yours', 'his', 'hers', 'its', 'theirs'])
+    SET_DETERMINER_POSSESSIVE = {'my', 'our', 'thy', 'your', 'his', 'her', 'its', 'their'}
+    SET_PRONOUN_POSSESSIVE = {'mine', 'ours', 'thine', 'yours', 'his', 'hers', 'its', 'theirs'}
     SET_POSSESSIVE = SET_DETERMINER_POSSESSIVE | SET_PRONOUN_POSSESSIVE
 
-    SET_DETERMINER_YOUR = set([
+    SET_DETERMINER_YOUR = {
         'each',  # 'every',
         'either', 'neither',
         'some', 'any', 'no',
@@ -167,14 +164,14 @@ class Sets:
         'all', 'both',  # 'half',
         # 'several',
         'enough',
-    ])
+    }
     # | set([])
     SET_DETERMINER = SET_ARTICLE | SET_DETERMINER_POSSESSIVE | SET_DETERMINER_YOUR
 
     # SET_STOP_ prefix: potentially useful for other purposes, but currently
     # only for stop words
-    SET_STOP_DETERMINER_INC = set(['each', 'none', 'few', 'most', 'more', ])
-    SET_STOP_CONJUNCITON_SUBORDINATING_INC = set([
+    SET_STOP_DETERMINER_INC = {'each', 'none', 'few', 'most', 'more', }
+    SET_STOP_CONJUNCITON_SUBORDINATING_INC = {
         'after',
         'although',
         'as',  # also as if
@@ -193,14 +190,13 @@ class Sets:
         'when',
         'where',
         'while',  # noun, adverb, verb
-    ])
-    SET_STOP_MODAL_INC = set(['cannot', 'could', 'ought', 'should', 'would'])
-    SET_STOP_INTERROGATIVE = set(
-        ['how', 'what', 'who', 'whom', 'why', 'when', 'where', 'which'])
+    }
+    SET_STOP_MODAL_INC = {'cannot', 'could', 'ought', 'should', 'would'}
+    SET_STOP_INTERROGATIVE = {'how', 'what', 'who', 'whom', 'why', 'when', 'where', 'which'}
 
     # based on http://meta.wikimedia.org/wiki/Stop_word_list/google_stop_word_list
     # which uses http://www.ranks.nl/resources/stopwords.html
-    SET_COMMON = SET_DETERMINER | SET_PREPOSITION_SHORT | SET_PREPOSITION_EXTENSION | SET_CONJUNCTION | SET_PRONOUN_PERSONAL | SET_STOP_DETERMINER_INC | SET_STOP_CONJUNCITON_SUBORDINATING_INC | SET_STOP_MODAL_INC | SET_STOP_INTERROGATIVE | set([
+    SET_COMMON = SET_DETERMINER | SET_PREPOSITION_SHORT | SET_PREPOSITION_EXTENSION | SET_CONJUNCTION | SET_PRONOUN_PERSONAL | SET_STOP_DETERMINER_INC | SET_STOP_CONJUNCITON_SUBORDINATING_INC | SET_STOP_MODAL_INC | SET_STOP_INTERROGATIVE | {
         # to "be"
         'be', 'am', 'are', 'is', 'was', 'were', 'been', 'being',
         # to "do"
@@ -225,7 +221,7 @@ class Sets:
         'those',  # ^
         'too',  # adverb
         'very',  # adjective, adverb?
-    ])
+    }
 
 # The "building blocks" of sequences!
 
@@ -298,7 +294,7 @@ class Word(SequenceUnit):
         if self.flags != 1:
             self.flags = 2
 
-    NEAR_EXCEPTIONS = set(['', u"…"])
+    NEAR_EXCEPTIONS = {'', u"…"}
 
     def is_near(self):
         """Returns whether this word may be included as a "near" word"""

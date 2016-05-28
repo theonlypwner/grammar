@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-SET_ARE = set(['are', "aren't"])
+SET_ARE = {'are', "aren't"}
 
 
 def do(self, cur):

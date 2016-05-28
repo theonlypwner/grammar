@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-SET_MODAL = set(['could', 'should', 'would', 'must',
-                 "couldn't", "shouldn't", "wouldn't", "mustn't"])
-SET_CMP = set(['more', 'less'])
+SET_MODAL = {'could', 'should', 'would', 'must',
+                 "couldn't", "shouldn't", "wouldn't", "mustn't"}
+SET_CMP = {'more', 'less'}
 
 
 def do(self, cur):

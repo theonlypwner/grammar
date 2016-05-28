@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-SET_COMPARATIVE = set(['better', 'worse', 'more', 'less'])
-SET_NOFOLLOW = set(['lol', 'be', 'do', 'did', 'get', 'got'])
+SET_COMPARATIVE = {'better', 'worse', 'more', 'less'}
+SET_NOFOLLOW = {'lol', 'be', 'do', 'did', 'get', 'got'}
 
 
 def do(self, cur):

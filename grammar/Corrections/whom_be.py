@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 
-SET_BE_PRESENT = set(['be', 'am', 'are', 'is'])
-SET_BE_PAST = set(['was', 'were'])
-SET_1 = set(['i', 'me', 'myself'])
-SET_2 = set(['people', 'persons', 'we', 'us', 'you', 'they', 'them'])
-SET_3 = set(['person', 'guy', 'he', 'him', 'she', 'her', 'it'])
+SET_BE_PRESENT = {'be', 'am', 'are', 'is'}
+SET_BE_PAST = {'was', 'were'}
+SET_1 = {'i', 'me', 'myself'}
+SET_2 = {'people', 'persons', 'we', 'us', 'you', 'they', 'them'}
+SET_3 = {'person', 'guy', 'he', 'him', 'she', 'her', 'it'}
 
 
 def do(self, cur):

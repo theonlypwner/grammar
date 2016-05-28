@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-SET_EFFECT = set(['effect', 'effects'])
+SET_EFFECT = {'effect', 'effects'}
 NEW_WORD = {
     'its': "it's",
     'your': "you're",

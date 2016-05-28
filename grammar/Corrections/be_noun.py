@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # no 'am'
-SET_BE = set(['be', 'is', 'are', "isn't", "aren't"])
+SET_BE = {'be', 'is', 'are', "isn't", "aren't"}
 
 
 def do(self, cur):

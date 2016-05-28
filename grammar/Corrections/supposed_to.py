@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
-SET_3 = set(['he', 'she', 'it'])
-SET_2 = set(['we', 'you', 'they'])
+SET_3 = {'he', 'she', 'it'}
+SET_2 = {'we', 'you', 'they'}
 
 
 def do(self, cur):

@@ -1,10 +1,8 @@
 #!/usr/bin/env python
 
-SET_do_check_there_own_FUSED = set(
-    ['anyone', 'anybody', 'someone', 'somebody', 'no-one', 'no-body', 'noone', 'nobody'])
-SET_do_check_there_own_UNFUSED1 = set(['any', 'some', 'no'])
-SET_do_check_there_own_UNFUSED2 = set(
-    ['one', 'person', 'people', 'body', 'of'])
+SET_do_check_there_own_FUSED = {'anyone', 'anybody', 'someone', 'somebody', 'no-one', 'no-body', 'noone', 'nobody'}
+SET_do_check_there_own_UNFUSED1 = {'any', 'some', 'no'}
+SET_do_check_there_own_UNFUSED2 = {'one', 'person', 'people', 'body', 'of'}
 
 
 def do(self, cur):

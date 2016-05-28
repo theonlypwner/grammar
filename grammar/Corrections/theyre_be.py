@@ -2,9 +2,9 @@
 
 from .be_noun import SET_BE
 from .of import SET_MODAL as SET_OF_MODAL
-SET_THERETHEIR = set(['there', 'their'])
-SET_THERETHEIRAND = set(['there', 'their', 'and'])
-SET_MODAL_SINGULAR = set(['is', "isn't"])
+SET_THERETHEIR = {'there', 'their'}
+SET_THERETHEIRAND = {'there', 'their', 'and'}
+SET_MODAL_SINGULAR = {'is', "isn't"}
 # 'is' is already checked
 SET_MODAL = SET_BE | SET_OF_MODAL
 

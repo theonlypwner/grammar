@@ -2,8 +2,8 @@
 
 # NOTE: no need for 'am' except for "there am I"
 from .theyre_be import SET_MODAL
-SET_THERE_THEYRE = set(['there', "they're"])
-SET_THERE_THEYRE_AND = set(['there', "they're", 'and'])
+SET_THERE_THEYRE = {'there', "they're"}
+SET_THERE_THEYRE_AND = {'there', "they're", 'and'}
 
 
 def do(self, cur):

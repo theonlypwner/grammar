@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-SET_BUTYET = set(['but', 'yet'])
+SET_BUTYET = {'but', 'yet'}
 from .then import SET_COMPARATIVE    # replicated
 
 

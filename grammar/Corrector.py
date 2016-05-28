@@ -23,7 +23,7 @@ class CorrectionManager(object):
         self.corrections = []
         self.sequence = None
         self.corrected = {}
-        self.rerun = set([1])  # 0 = done, 1 = initial run, 2+ = rerun groups
+        self.rerun = {1}  # 0 = done, 1 = initial run, 2+ = rerun groups
 
     def load_text(self, text, **options):
         """Load some text into the state and return whether there are detections"""
@@ -52,7 +52,7 @@ class CorrectionManager(object):
                     cur=cur,
                 )
 
-    SET_possessive_as_be = set(['its', 'your', 'whose'])
+    SET_possessive_as_be = {'its', 'your', 'whose'}
 
     def do_checks(self, current_rerun, cur):
         if 1 in current_rerun:
