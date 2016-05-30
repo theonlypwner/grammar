@@ -7,7 +7,8 @@
 class Sets:
     SET_ARTICLE = {'a', 'an', 'the'}
 
-    SET_CONJUNCTION_COORDINATING = {'for', 'and', 'nor', 'but', 'or', 'yet', 'so'}
+    SET_CONJUNCTION_COORDINATING = {
+        'for', 'and', 'nor', 'but', 'or', 'yet', 'so'}
 
     SET_CONJUNCTION_SUBORDINATING = {'as'}
 
@@ -150,8 +151,10 @@ class Sets:
         'myselves', 'ourself', 'themself',  # *reflexive
     }
 
-    SET_DETERMINER_POSSESSIVE = {'my', 'our', 'thy', 'your', 'his', 'her', 'its', 'their'}
-    SET_PRONOUN_POSSESSIVE = {'mine', 'ours', 'thine', 'yours', 'his', 'hers', 'its', 'theirs'}
+    SET_DETERMINER_POSSESSIVE = {
+        'my', 'our', 'thy', 'your', 'his', 'her', 'its', 'their'}
+    SET_PRONOUN_POSSESSIVE = {
+        'mine', 'ours', 'thine', 'yours', 'his', 'hers', 'its', 'theirs'}
     SET_POSSESSIVE = SET_DETERMINER_POSSESSIVE | SET_PRONOUN_POSSESSIVE
 
     SET_DETERMINER_YOUR = {
@@ -192,7 +195,8 @@ class Sets:
         'while',  # noun, adverb, verb
     }
     SET_STOP_MODAL_INC = {'cannot', 'could', 'ought', 'should', 'would'}
-    SET_STOP_INTERROGATIVE = {'how', 'what', 'who', 'whom', 'why', 'when', 'where', 'which'}
+    SET_STOP_INTERROGATIVE = {
+        'how', 'what', 'who', 'whom', 'why', 'when', 'where', 'which'}
 
     # based on http://meta.wikimedia.org/wiki/Stop_word_list/google_stop_word_list
     # which uses http://www.ranks.nl/resources/stopwords.html

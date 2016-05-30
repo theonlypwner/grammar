@@ -107,7 +107,9 @@ def transform(text, do_decode_html=False,
             if word:
                 # people tend to use auto-@reply, which leaves
                 # @<lowercase_name>, and C&P'd links
-                if word[0] == '@' or word.startswith('http://') or word.startswith('https://'):
+                if (word[0] == '@' or
+                        word.startswith('http://') or
+                        word.startswith('https://')):
                     continue
                 words_total += 1
                 if word.isupper():
@@ -115,7 +117,8 @@ def transform(text, do_decode_html=False,
                 if word.istitle():
                     words_title += 1
         # 65% all-caps or 80% title-case
-        if words_upper >= words_total * 13 / 20 or words_title >= words_total * 4 / 5:
+        if (words_upper >= words_total * 13 / 20 or
+                words_title >= words_total * 4 / 5):
             # Now, only the first letter of every sentence is now capitalized.
             text = REGEX_FIX_ALLCAPS.sub(REGEX_FIX_ALLCAPS_REPL, text)
             do_fixi = True

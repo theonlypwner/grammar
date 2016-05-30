@@ -46,7 +46,8 @@ why_reasons = {
     'whom': (u"‘whom’ is not nominative", u"‘whom’ isn't in subjective case"),
 }
 # More Constants
-modals_infinitive = ('should', 'ought to', 'could', 'can', 'meant to', 'intended to')
+modals_infinitive = (
+    'should', 'ought to', 'could', 'can', 'meant to', 'intended to')
 modals_perfect = ('should have', 'ought to have', 'could have')
 said_past = ('used', 'said', 'tweeted', 'posted')  # (simple [past) perfect]
 said_infinitive = ('use', 'say', 'tweet', 'post')  # without 'to'
@@ -157,7 +158,8 @@ def generate(corrections, corrected, user):
     if verbs:  # pragma: no cover
         predicate += verbs + ' '
     # jump that quote
-    predicate += '%s instead.' % (english_join(tuple(map(u'“{0}”'.format, corrections))))
+    predicate += '%s instead.' % (
+        english_join(tuple(map(u'“{0}”'.format, corrections))))
     # 2nd person instead of 3rd (65%)
     if second_person and 17 >= random.randrange(20):  # pragma: no cover
         # Invert the subject so that we address one personally (85%)

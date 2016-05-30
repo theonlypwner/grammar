@@ -29,7 +29,7 @@ def do(self, cur):
     elif prev_word_1.word_lower == "doesn't":
         if prev_word_2.word_lower == "i":
             person = 1
-        elif not prev_word_2.word_lower in SET_2:
+        elif prev_word_2.word_lower not in SET_2:
             person = 3
         # else: person = 2
     elif prev_word_1.word_lower == "didn't":

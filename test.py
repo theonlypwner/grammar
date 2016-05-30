@@ -184,9 +184,11 @@ class ParserFunctions(unittest.TestCase):
         self.positive("Their must be something!", "[There] must be something!")
         # Exception
         self.negative("the difference between there/they're/their is")
-        self.negative("Those who know the difference between there/they're/their are.")
+        self.negative(
+            "Those who know the difference between there/they're/their are.")
         self.negative("the difference between they're/there/their is")
-        self.negative("Those who know the difference between they're/there/their are.")
+        self.negative(
+            "Those who know the difference between they're/there/their are.")
         # Boundary check: _ (1)
         self.negative("their")
         # Restriction: _ <modal>
@@ -242,8 +244,10 @@ class ParserFunctions(unittest.TestCase):
         self.positive("I should not of done it", "I should not['ve] done it")
         self.positive("I shouldn't of done it", "I shouldn't['ve] done it")
         self.positive("I should of went there", "I should['ve gone] there")
-        self.positive("I should not of went there", "I should not['ve gone] there")
-        self.positive("I should of not went there", "I should['ve] not [gone] there")
+        self.positive(
+            "I should not of went there", "I should not['ve gone] there")
+        self.positive(
+            "I should of not went there", "I should['ve] not [gone] there")
         # Exception 1
         self.negative("He could of course do")
         # Exception 2

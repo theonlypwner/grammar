@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 SET_MODAL = {'could', 'should', 'would', 'must',
-                 "couldn't", "shouldn't", "wouldn't", "mustn't"}
+             "couldn't", "shouldn't", "wouldn't", "mustn't"}
 SET_CMP = {'more', 'less'}
 
 
@@ -38,10 +38,13 @@ def do(self, cur):
             return
     if prev_words[not_shift].word_lower == 'might':
         # Exception 3a: <determiner> {might of}
-        if len(prev_words) >= 2 + not_shift and prev_words[1 + not_shift].is_determiner():
+        if (len(prev_words) >= 2 + not_shift and
+                prev_words[1 + not_shift].is_determiner()):
             return
         # Exception 3b: {might of} <determiner|NP>
-        if next_word_1 and (next_word_1.is_determiner() or next_word_1.is_pronoun_personal()):
+        if (next_word_1 and
+                (next_word_1.is_determiner() or
+                 next_word_1.is_pronoun_personal())):
             return
     elif prev_words[not_shift].word_lower not in SET_MODAL:
         return

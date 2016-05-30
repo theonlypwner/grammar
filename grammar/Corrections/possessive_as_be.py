@@ -12,7 +12,7 @@ def do(self, cur):
     """Keyword: (its|your|whose)
     Src: _ (<article|possessive_determiner|possessive_pronoun|preposition>|here|not) <word>
     Dst: (it's|you're|who's) <word>
-    
+
     NOTE: causes extension
     """
     if not self.sequence.next_has_continuous(2):

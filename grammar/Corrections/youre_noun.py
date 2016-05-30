@@ -14,7 +14,8 @@ def do(self, cur):
         return
     next_word_1 = self.sequence.next_word(1)
     if next_word_1.word_lower != 'own':
-        if next_word_1.word_lower != 'day' and next_word_1.word_lower != 'life':
+        if (next_word_1.word_lower != 'day' and
+                next_word_1.word_lower != 'life'):
             return
 
         if self.sequence.next_has_continuous(2, 1):
