@@ -4,10 +4,19 @@ python:
   - "2.7"
 #  - "3.2" # because u'' doesn't work
   - "3.3"
+  - "3.4"
+  - "3.5"
+  - "3.5-dev"
+  - "nightly"
   - "pypy"
+  - "pypy3"
 matrix:
   allow_failures:
-    - python: "pypy"
+    - python:
+      - "3.5-dev"
+      - "nightly"
+      - "pypy"
+      - "pypy3"
 branches:
   only:
     - master
