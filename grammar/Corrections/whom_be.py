@@ -3,7 +3,7 @@
 SET_BE_PRESENT = {'be', 'am', 'are', 'is'}
 SET_BE_PAST = {'was', 'were'}
 SET_1 = {'i', 'me', 'myself'}
-SET_2 = {'people', 'persons', 'we', 'us', 'you', 'they', 'them'}
+SET_2 = {'people', 'persons', 'we', 'us', 'you', 'they', 'them', 'those'}
 SET_3 = {'person', 'guy', 'he', 'him', 'she', 'her', 'it'}
 
 

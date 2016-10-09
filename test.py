@@ -296,6 +296,8 @@ class ParserFunctions(unittest.TestCase):
         self.positive("I whom was", "I [who] was")
         self.positive("people whom are", "people [who] are")
         self.positive("people whom were", "people [who] were")
+        self.positive("those whom are", "those [who] are")
+        self.positive("those whom were", "those [who] were")
         self.positive("see whomever is", "see [whoever] is")
         self.positive("Whomever is", "[Whoever] is")
         # "Whoever" is always singular
