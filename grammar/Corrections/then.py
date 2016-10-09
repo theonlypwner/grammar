@@ -9,7 +9,7 @@ def do(self, cur):
     Src: <word> (better|more|less) _ <word>
     Dst: ... [than] <word>
     """
-    prev_words = self.sequence.prev_get_words_continuous()
+    prev_words = self.sequence.prev_get_words_continuous(True)
     if len(prev_words) < 2:
         return
     if prev_words[0].word_lower not in SET_COMPARATIVE:
