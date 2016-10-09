@@ -49,20 +49,28 @@ why_reasons = {
 modals_infinitive = (
     'should', 'ought to', 'could', 'can', 'meant to', 'intended to')
 modals_perfect = ('should have', 'ought to have', 'could have')
-said_past = ('used', 'said', 'tweeted', 'posted')  # (simple [past) perfect]
-said_infinitive = ('use', 'say', 'tweet', 'post')  # without 'to'
+said_past = ('used', 'said', 'tweeted', 'posted', 'typed')  # (simple [past) perfect]
+said_infinitive = ('use', 'say', 'tweet', 'post', 'type', 'write')  # without 'to'
 tweet_noun = ('a tweet', 'a post', 'a status', 'a message',
               'a status update', 'an update')  # singular
 MESSAGE = [
     # (clause, add ' that'),
     # confident
     ('it is the case that', False),
+    ('it is true that', False),
     ('in this case,', False),
     # in ___'s/your tweet,
     ('I am confident', True),
+    ('I am sure', True),
     ('I say', True),
-    ('I note that', False),
+    ('I claim', True),
+    ('I aver that', False),
+    ('I assert that', False),
+    ('I contend that', False),
     ('I declare that', False),
+    ('I insist that', False),
+    ('I note that', False),
+    ('I state that', False),
     ('I noticed', True),
     ('I discovered', True),
     ('I see', True),
@@ -75,6 +83,10 @@ MESSAGE = [
     ('it appears to me', True),
     ('it seems like', False),
     ('it looks like', False),
+    ('it seems to be the case that', False),
+    ('it appears to be the case that', False),
+    ('it seems to be true that', False),
+    ('it appears to be true that', False),
     # weak
     ('I think', True),
     ('I believe', True),
@@ -82,8 +94,9 @@ MESSAGE = [
     ('I suppose', True),
     ('I suspect', True),
     ('I feel', True),
-    ('it seems to be the case that', False),
-    ('it appears to be the case that', False),
+    ('it is my opinion that', False),
+    # sort of uncertain
+    ('I guess', True),
 ]
 
 
@@ -108,7 +121,7 @@ def generate(corrections, corrected, user):
          ('to' if use_infinitive else 'to have',), said_infinitive if use_infinitive else said_past),
         (False, None, ('%s%s %s and %s' % (
             inflected_have_optional,
-            random.choice(['made', 'created', 'tweeted', 'posted',
+            random.choice(['made', 'created', 'tweeted', 'posted', 'typed',
                            'written' if use_inflected_have else 'wrote']),
             random.choice(
                 ['an error', 'a mistake', 'a solecism', 'a typo']),
