@@ -2,22 +2,6 @@
 grammar
 ========
 
-.. image:: https://travis-ci.org/theonlypwner/grammar.svg?branch=master
-	:target: https://travis-ci.org/theonlypwner/grammar
-	:alt: Build status
-
-.. image:: https://coveralls.io/repos/github/theonlypwner/grammar/badge.svg?branch=master
-	:target: https://coveralls.io/github/theonlypwner/grammar?branch=master
-	:alt: Coverage Status
-
-.. image:: https://www.codacy.com/project/badge/1a50eeb1918e4d76912d05bf468c93e0
-	:target: https://www.codacy.com/app/victor/grammar
-	:alt: Codacy Badge
-
-.. image:: https://landscape.io/github/theonlypwner/grammar/master/landscape.svg?style=flat
-   :target: https://landscape.io/github/theonlypwner/grammar/master
-   :alt: Code Health
-
 @_grammar_ might correct your grammar on Twitter!
 
 This is a Python parser that corrects some common grammar errors.
@@ -44,3 +28,9 @@ Usage
 	else:
 		# no errors detected
 		pass
+
+============
+Package Structure
+============
+
+This was taken from part of a private project and has not been packaged properly for pip.
