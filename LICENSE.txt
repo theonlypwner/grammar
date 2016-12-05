@@ -1,0 +1,9 @@
+grammar is released under the AGPL (Affero General Public License) version 3 with extra conditions:
+
+Derivative works of this software must not be used to generate content for distribution, unless there is an offer to provide the source code.
+In other words, if you use this software to publish material on a social network, you must provide a download to the source code on your profile of that social network.
+
+All derivative works containing a modified version of this project must be licensed under this license.
+Derivative works containing an unmodified version of this project must be licensed under the AGPL license or a compatible license.
+
+Contact me (the author) for clarifications or if this license is too restrictive for your purposes.
