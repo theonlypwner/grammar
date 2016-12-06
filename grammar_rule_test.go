@@ -11,7 +11,7 @@ func positive(t *testing.T, in, out string) {
 	case corrections[0] != out:
 		t.Errorf("corrections[0] == %q, want %q", corrections[0], out)
 	case len(why) == 0:
-		t.Errorf("len(why) == 0", why, len(why))
+		t.Errorf("len(why) == 0")
 	}
 }
 
