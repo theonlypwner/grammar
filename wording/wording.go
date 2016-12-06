@@ -46,14 +46,12 @@ func engJoin(a ...string) string {
 
 // MakeTweet randomly generates a tweet message to correct a user.
 func MakeTweet(corrections, reasons []string, user string) string {
-	opt := msgAlterOpt{
-		p(.65), // secondPerson
-	}
+	secondPerson := p(.65)
 
 	// Build the sentence!
 	clause := ""
-	modals := modalsPerfect[:]
-	verbs := saidPast[:]
+	modal := ""
+	verb := ""
 	if p(.75) { // Add prefix (75%)
 		prefix := msgPrefixes[rand.Intn(len(msgPrefixes))]
 		clause = prefix.clause + " "
@@ -61,23 +59,11 @@ func MakeTweet(corrections, reasons []string, user string) string {
 			clause += "that "
 		}
 	}
-	if p(.40) { // Alter it! (40%)
-		msgAlters[rand.Intn(len(msgAlters))](&opt, &clause, &modals, &verbs)
-	}
-
-	predicate := ""
-	// choose
-	if modal := choice(modals...); modal != "" {
-		predicate += modal + " "
-	}
-	if verb := choice(verbs...); verb != "" {
-		predicate += verb + " "
-	}
-	predicate += engJoin(corrections...) + " instead."
+	msgLoaders[rand.Intn(len(msgLoaders))](secondPerson, &clause, &modal, &verb)
 
 	// Build the entire sentence
 	result := ""
-	if opt.secondPerson { // 2nd person instead of 3rd (65%)
+	if secondPerson { // 2nd person instead of 3rd (65%)
 		if p(.85) {
 			// Invert the subject so that we address one personally (85%)
 			clause = user + ", " + clause
@@ -86,12 +72,11 @@ func MakeTweet(corrections, reasons []string, user string) string {
 			user = fmt.Sprintf("you, %v,", user)
 		}
 	}
-	if p(.10) { // Cleft sentence (10%)
-		clause += "it is "
-		user += choice(" who", " that")
-		// TODO fix with "it is possible"
-	}
-	result = firstCap(clause) + user + " " + predicate
+	result = firstCap(clause) +
+		user + " " +
+		modal + " " +
+		verb + " " +
+		engJoin(corrections...) + " instead."
 
 	// Explain why, if we have space
 	if len(reasons) != 0 {
@@ -118,7 +103,7 @@ func MakePost(corrections, reasons []string, user string) string {
 
 func p(x float64) bool { return rand.Float64() < x }
 
-func choice(s ...string) string {
+func choice(s []string) string {
 	if len(s) == 0 {
 		return ""
 	}
@@ -196,90 +181,102 @@ var msgPrefixes = [...]msgPrefix{
 	{"I guess", true},
 }
 
-type msgAlterOpt struct{ secondPerson bool }
+type msgLoader func(secondPerson bool, clause, modal, verb *string)
 
-type msgAlter func(o *msgAlterOpt, clause *string, modals, verbs *[]string)
-
-var msgAlters_HAD = [...]string{"had"}
-var msgAlters_TO = [...]string{"to"}
-var msgAlters_TO_HAVE = [...]string{"to have"}
-var msgAlters = [...]msgAlter{
-	func(_ *msgAlterOpt, _ *string, m, v *[]string) {
-		*m = modalsInfinitive[:]
-		*v = saidInfinitive[:]
+var msgLoadersCouldMightWould = [...]string{"could", "might", "would"}
+var msgLoaders_HaveBeen_Be = [...]string{"have been", "be"}
+var msgLoadersWrote = [...]string{"wrote", "made", "created", "tweeted", "posted", "typed", "written"}
+var msgLoadersWritePerfect = msgLoadersWrote[1:]
+var msgLoadersWritePast = msgLoadersWrote[:len(msgLoadersWrote)-1]
+var msgLoaders_Mistake = [...]string{"an error", "a mistake", "a solecism", "a typo"}
+var msgLoaders_MistakeVerb = [...]string{"miswrote", "botched", "blundered", "messed up", "malformed", "screwed up", "mistyped", "miswritten"}
+var msgLoaders_MistakeVerbPerfect = msgLoaders_MistakeVerb[1:]
+var msgLoaders_MistakeVerbPast = msgLoaders_MistakeVerb[:len(msgLoaders_MistakeVerb)-1]
+var msgLoaders = [...]msgLoader{
+	func(_ bool, c, m, v *string) {
+		*m = choice(modalsPerfect[:])
+		*v = choice(saidPast[:])
+		cleft(c, m)
 	},
-	func(_ *msgAlterOpt, c *string, m, v *[]string) {
+	func(_ bool, c, m, v *string) {
+		*m = choice(modalsInfinitive[:])
+		*v = choice(saidInfinitive[:])
+		cleft(c, m)
+	},
+	func(_ bool, c, m, v *string) {
 		clauseAppend(c, fmt.Sprintf("it %v %v better if ",
-			choice("could", "might", "would"),
-			choice("have been", "be"),
+			choice(msgLoadersCouldMightWould[:]),
+			choice(msgLoaders_HaveBeen_Be[:]),
 		))
-		*m = msgAlters_HAD[:]
-		*v = saidPast[:]
+		*m = "had"
+		*v = choice(saidPast[:])
 	},
-	func(_ *msgAlterOpt, c *string, m, v *[]string) {
+	func(_ bool, c, m, v *string) {
 		if p(.50) {
 			clauseAppend(c, "it is possible for ")
-			*m = msgAlters_TO[:]
-			*v = saidInfinitive[:]
+			*m = "to"
+			*v = choice(saidInfinitive[:])
 		} else {
 			clauseAppend(c, "it was possible for ")
-			*m = msgAlters_TO_HAVE[:]
-			*v = saidPast[:]
+			*m = "to have"
+			*v = choice(saidPast[:])
 		}
 	},
-	func(o *msgAlterOpt, _ *string, m, v *[]string) {
+	func(secondPerson bool, c, m, v *string) {
 		if p(.50) { // infinitive rather than perfect (50%)
-			*m = modalsInfinitive[:]
-			*v = saidInfinitive[:]
+			*m = choice(modalsInfinitive[:])
+			*v = choice(saidInfinitive[:])
 		} else {
-			*m = modalsPerfect[:]
-			*v = saidPast[:]
+			*m = choice(modalsPerfect[:])
+			*v = choice(saidPast[:])
 		}
 		if p(.50) { // perfect (have) instead of simple past (50%)
 			h := "have"
-			if !o.secondPerson {
+			if !secondPerson {
 				h = "has"
 			}
-			*m = []string{fmt.Sprintf("%v %v a%v and %v",
+			*m = fmt.Sprintf("%v %v %v and %v",
 				h,
-				choice("made", "created", "tweeted", "posted", "typed", "written"),
-				choice("n error", " mistake", " solecism", " typo"),
-				choice(*m...),
-			)}
+				choice(msgLoadersWritePerfect),
+				choice(msgLoaders_Mistake[:]),
+				*m,
+			)
 		} else {
-			*m = []string{fmt.Sprintf("%v a%v and %v",
-				choice("made", "created", "tweeted", "posted", "typed", "wrote"),
-				choice("n error", " mistake", " solecism", " typo"),
-				choice(*m...),
-			)}
+			*m = fmt.Sprintf("%v %v and %v",
+				choice(msgLoadersWritePast),
+				choice(msgLoaders_Mistake[:]),
+				*m,
+			)
 		}
+		cleft(c, m)
 	},
-	func(o *msgAlterOpt, _ *string, m, v *[]string) {
+	func(secondPerson bool, c, m, v *string) {
 		if p(.50) { // infinitive rather than perfect (50%)
-			*m = modalsInfinitive[:]
-			*v = saidInfinitive[:]
+			*m = choice(modalsInfinitive[:])
+			*v = choice(saidInfinitive[:])
 		} else {
-			*m = modalsPerfect[:]
-			*v = saidPast[:]
+			*m = choice(modalsPerfect[:])
+			*v = choice(saidPast[:])
 		}
 		if p(.50) { // perfect (have) instead of simple past (50%)
 			h := "have"
-			if !o.secondPerson {
+			if !secondPerson {
 				h = "has"
 			}
-			*m = []string{fmt.Sprintf("%v %v %v and %v",
+			*m = fmt.Sprintf("%v %v %v and %v",
 				h,
-				choice("botched", "blundered", "messed up", "malformed", "screwed up", "mistyped", "miswritten"),
-				choice(tweetNoun[:]...),
-				choice(*m...),
-			)}
+				choice(msgLoaders_MistakeVerbPerfect),
+				choice(tweetNoun[:]),
+				*m,
+			)
 		} else {
-			*m = []string{fmt.Sprintf("%v %v and %v",
-				choice("botched", "blundered", "messed up", "malformed", "screwed up", "mistyped", "miswrote"),
-				choice(tweetNoun[:]...),
-				choice(*m...),
-			)}
+			*m = fmt.Sprintf("%v %v and %v",
+				choice(msgLoaders_MistakeVerbPast),
+				choice(tweetNoun[:]),
+				*m,
+			)
 		}
+		cleft(c, m)
 	},
 }
 
@@ -289,5 +286,14 @@ func clauseAppend(c *string, repl string) {
 		*c += repl
 	} else {
 		*c = repl
+	}
+}
+
+var cleftModals = [...]string{"who ", "that "}
+
+func cleft(clause, modal *string) {
+	if p(.10) { // Cleft sentence (10%)
+		*clause += "it is "
+		*modal = choice(cleftModals[:]) + *modal
 	}
 }
