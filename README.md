@@ -1,6 +1,9 @@
 # grammar
 [![Build Status](https://travis-ci.org/theonlypwner/grammar.svg?branch=master)](https://travis-ci.org/theonlypwner/grammar)
 [![Coverage Status](https://coveralls.io/repos/github/theonlypwner/grammar/badge.svg?branch=master)](https://coveralls.io/github/theonlypwner/grammar?branch=master)
+[![GoCover](http://gocover.io/_badge/victorz.ca/grammar)](https://gocover.io/victorz.ca/grammar)
+[![Go Report Card](https://goreportcard.com/badge/victorz.ca/grammar)](https://goreportcard.com/report/victorz.ca/grammar)
+[![GoDoc](https://godoc.org/victorz.ca/grammar?status.svg)](https://godoc.org/victorz.ca/grammar)
 
 @\_grammar\_ might correct your grammar on Twitter!
 
