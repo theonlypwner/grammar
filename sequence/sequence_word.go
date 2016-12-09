@@ -28,7 +28,7 @@ type Word struct {
 }
 
 // NewWord makes a Word for the given original text.
-func NewWord(w string) Word {
+func NewWord(w, lower string) Word {
 	caps := WC_UPPER
 
 	for i, r := range w {
@@ -48,7 +48,7 @@ func NewWord(w string) Word {
 
 	return Word{
 		NewToken(w),
-		strings.ToLower(w),
+		lower,
 		caps,
 		false,
 	}

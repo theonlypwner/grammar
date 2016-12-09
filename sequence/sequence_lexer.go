@@ -1,5 +1,9 @@
 package sequence
 
+import (
+	"strings"
+)
+
 // New makes a Sequence from an input string.
 func New(s string) S {
 	seq := S{}
@@ -8,12 +12,14 @@ func New(s string) S {
 		return seq
 	}
 
+	sLower := strings.ToLower(s)
+
 	word := 0
 	space := -1
 	level := SL_SPACE
 
 	appendWS := func(i int) {
-		seq.Words = append(seq.Words, NewWord(s[word:space]))
+		seq.Words = append(seq.Words, NewWord(s[word:space], sLower[word:space]))
 		seq.Spaces = append(seq.Spaces, NewSpace(s[space:i], level))
 	}
 

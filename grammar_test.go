@@ -65,3 +65,65 @@ func TestWording(t *testing.T) {
 		t.Errorf("Expected non-empty reply")
 	}
 }
+
+var corrections, why []string
+
+func BenchmarkShortOK(b *testing.B) {
+	var c, w []string
+	for n := 0; n < b.N; n++ {
+		c, w = Load("Nothing's wrong with this sentence.")
+	}
+	corrections = c
+	why = w
+}
+
+func BenchmarkShortDetect(b *testing.B) {
+	var c, w []string
+	for n := 0; n < b.N; n++ {
+		c, w = Load("But it's true that their is a problem with this sentence.")
+	}
+	corrections = c
+	why = w
+}
+
+func BenchmarkLongOK(b *testing.B) {
+	s := "Nothing's wrong with this sentence. "
+	for i := 0; i < 10; i++ {
+		s += s
+	}
+
+	var c, w []string
+	for n := 0; n < b.N; n++ {
+		c, w = Load(s)
+	}
+	corrections = c
+	why = w
+}
+
+func BenchmarkLongDetect(b *testing.B) {
+	s := "But it's true that their is a problem with this sentence. "
+	for i := 0; i < 10; i++ {
+		s += s
+	}
+
+	var c, w []string
+	for n := 0; n < b.N; n++ {
+		c, w = Load(s)
+	}
+	corrections = c
+	why = w
+}
+
+func BenchmarkVeryLongOK(b *testing.B) {
+	s := "Nothing's wrong with this sentence. "
+	for i := 0; i < 15; i++ {
+		s += s
+	}
+
+	var c, w []string
+	for n := 0; n < b.N; n++ {
+		c, w = Load(s)
+	}
+	corrections = c
+	why = w
+}
