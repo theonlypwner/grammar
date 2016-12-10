@@ -14,11 +14,17 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// firstCap makes the first character title-case.
+// firstCap makes the first letter title-case.
 func firstCap(s string) string {
-	r, size := utf8.DecodeRuneInString(s)
-	if r != utf8.RuneError && !unicode.IsTitle(r) {
-		return string(unicode.ToTitle(r)) + s[size:]
+	result := []rune(s)
+	for i, r := range result {
+		if unicode.IsLetter(r) {
+			if !unicode.IsTitle(r) {
+				result[i] = unicode.ToTitle(r)
+				return string(result)
+			}
+			break
+		}
 	}
 	return s
 }
@@ -63,20 +69,26 @@ func MakeTweet(corrections, reasons []string, user string) string {
 
 	// Build the entire sentence
 	result := ""
+	fixCap := clause != ""
 	if secondPerson { // 2nd person instead of 3rd (65%)
 		if p(.85) {
 			// Invert the subject so that we address one personally (85%)
 			clause = user + ", " + clause
 			user = "you"
+			fixCap = false
 		} else {
 			user = fmt.Sprintf("you, %v,", user)
+			fixCap = true
 		}
 	}
-	result = firstCap(clause) +
+	result = clause +
 		user + " " +
 		modal + " " +
 		verb + " " +
 		engJoin(corrections...) + " instead."
+	if fixCap {
+		result = firstCap(result)
+	}
 
 	// Explain why, if we have space
 	if len(reasons) != 0 {
