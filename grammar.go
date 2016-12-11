@@ -16,7 +16,11 @@ func Load(s string) (corrections, why []string) {
 	seq := sequence.New(s)
 	why = parser.DoAll(&seq)
 	if len(why) != 0 {
-		corrections = seq.CorrectionsQuoted()
+		c := seq.Corrections()
+		corrections = make([]string, len(c))
+		for i, correction := range c {
+			corrections[i] = "“" + correction + "”"
+		}
 	}
 	return
 }

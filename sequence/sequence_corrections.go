@@ -4,6 +4,7 @@ import (
 	"bytes"
 )
 
+/*
 // String gets a string representing the sequence after modifications.
 func (s *S) String() string {
 	var buf bytes.Buffer
@@ -13,18 +14,10 @@ func (s *S) String() string {
 	}
 	return buf.String()
 }
+*/
 
 // Corrections returns a slice of strings showing differences in the new sequence.
 func (s *S) Corrections() []string {
-	return s.corrections(false)
-}
-
-// CorrectionsQuoted is like CorrectionsQuoted, but it adds quotation marks around each string.
-func (s *S) CorrectionsQuoted() []string {
-	return s.corrections(true)
-}
-
-func (s *S) corrections(quoted bool) []string {
 	var result []string
 	n := len(s.Words)
 
@@ -32,10 +25,6 @@ func (s *S) corrections(quoted bool) []string {
 
 	var last bytes.Buffer
 	lastEnd := END_NONE
-
-	if quoted {
-		last.WriteRune('“')
-	}
 
 	// Include: [<corrected>] <common>{0,2} <near> (on both sides)
 	// Allow one gap: <right boundary> <word> <left boundary>
@@ -48,9 +37,6 @@ func (s *S) corrections(quoted bool) []string {
 			if c == '?' || c == '!' {
 				last.WriteByte(c)
 			}
-		}
-		if quoted {
-			last.WriteRune('”')
 		}
 		result = append(result, last.String())
 	}
@@ -102,9 +88,6 @@ func (s *S) corrections(quoted bool) []string {
 			// no overlap, but not first
 			addLast()
 			last.Reset()
-			if quoted {
-				last.WriteRune('“')
-			}
 		}
 		for j := L; j != i; j++ {
 			last.WriteString(s.Words[j].Text)

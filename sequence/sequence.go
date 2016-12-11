@@ -99,7 +99,7 @@ func (s *S) HasNextInSentence(n int) bool {
 func (s *S) numLoopPrev(maxLevel SpaceLevel) int {
 	n := 0
 	for i := s.pos - 1; i >= 0; i-- {
-		if s.Spaces[i].Level >= maxLevel {
+		if s.Spaces[i].Level > maxLevel {
 			break
 		}
 		n++

@@ -176,6 +176,9 @@ func TestRule_than(t *testing.T) {
 	t.Parallel()
 
 	positive(t, "I did this and than I did that", "did this and [then] I did that")
+	positive(t, "I did this but than I did that", "did this but [then] I did that")
+	positive(t, "I did this yet than I did that", "did this yet [then] I did that")
+	positive(t, "I did this, and than I did that", "did this, and [then] I did that")
 	// Exception 1
 	negative(t, "the difference between then and than is")
 	// Exception 2

@@ -9,6 +9,13 @@ func TestLoadRegular(t *testing.T) {
 	negative(t, "This sentence is fine.")
 }
 
+func TestLoadBlank(t *testing.T) {
+	t.Parallel()
+
+	// Try to load an empty string.
+	negative(t, "")
+}
+
 func TestUnicode(t *testing.T) {
 	t.Parallel()
 
@@ -63,6 +70,16 @@ func TestWording(t *testing.T) {
 		t.Logf("Reply: %q", r)
 	} else {
 		t.Errorf("Expected non-empty reply")
+	}
+}
+
+func TestWordingEmpty(t *testing.T) {
+	// t.Parallel()
+
+	// Verify that wording can be generated without failing
+	r := MakeTweetReply("This sentence is acceptable.", "@@")
+	if r != "" {
+		t.Errorf("Expected empty reply")
 	}
 }
 
