@@ -1,0 +1,32 @@
+language: go
+go:
+  - 1.2.x
+  - 1.3.x
+  - 1.4.x
+  - 1.5.x
+  - 1.6.x
+  - 1.7
+  - 1.7.x
+  - 1.x
+  - master
+matrix:
+  allow_failures:
+    - go:
+      - 1.2.x
+      - 1.3.x
+      - 1.4.x
+      - master
+go_import_path: victorz.ca/grammar
+branches:
+  only:
+    - master
+before_install:
+  - go get github.com/mattn/goveralls
+  - go get golang.org/x/tools/cmd/cover
+install:
+  - go get -t -v ./...
+script:
+  - go test -race -coverprofile=coverage.txt -covermode=atomic
+  - $HOME/gopath/bin/goveralls -service=travis-ci
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
