@@ -1,4 +1,4 @@
-package main
+package grammar_test
 
 import (
 	"victorz.ca/grammar"
@@ -16,7 +16,7 @@ func runTest(s string) (undetected bool) {
 	return
 }
 
-func main() {
+func ExampleMakeTweetReply() {
 	for _, test := range [...]string{
 		"Nothing's wrong with this sentence.",
 		"But it's true that their is a problem with this sentence.",
