@@ -10,6 +10,8 @@ func TestFirstCap(t *testing.T) {
 	}{
 		{"", ""},
 		{"abcd", "Abcd"},
+		{"Already capitalized", "Already capitalized"},
+		{"--Already OK--", "--Already OK--"},
 		{"-e", "-E"},
 		{"---", "---"},
 		{"F", "F"},
