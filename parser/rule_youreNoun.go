@@ -20,6 +20,8 @@ func (r *ruleMatcher) rule_youreNoun(cur *sequence.Word, rerun *checkGroup) {
 	}
 	next1 := r.NextWord(1)
 	switch next1.Lower {
+	default:
+		return
 	case "own":
 
 	case "day", "life":
