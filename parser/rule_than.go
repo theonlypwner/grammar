@@ -41,8 +41,8 @@ func (r *ruleMatcher) rule_than(cur *sequence.Word) {
 		}
 	case "yet":
 		// Exception 3:
-		// <comparative> <NP> who isn't <adj> yet than one who
-		// Just find <comparative> 6 words before 'than'
+		// <comparative> for <NP> not <adj> yet than <NP>
+		// Exclude if <comparative> is found at least 6 words before 'than' in the same sentence
 		for i := 6; i <= p; i++ {
 			if r.PrevWord(i).IsComparative() {
 				return

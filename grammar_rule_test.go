@@ -184,7 +184,9 @@ func TestRule_than(t *testing.T) {
 	// Exception 2
 	negative(t, "better than something and than something else")
 	negative(t, "Is it more than they do or than I do?")
+	// Exception 3
 	negative(t, "They take more action for someone who isn't important yet than they ever did someone who is.")
+	negative(t, "They take more for those not important yet than those that are.")
 	// Boundary check: (1) <and/but/yet> _
 	negative(t, "than")
 	negative(t, "this and than")
