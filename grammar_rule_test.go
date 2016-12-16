@@ -173,6 +173,7 @@ func TestRule_then(t *testing.T) {
 	negative(t, "Do it better then")
 	// Boundary check: <comparative> | _
 	negative(t, "Do you want more? Then you should do this.")
+	negative(t, "I need one more; then I have all.")
 }
 
 func TestRule_than(t *testing.T) {

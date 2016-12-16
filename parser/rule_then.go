@@ -12,7 +12,7 @@ Dst: ... [than] *
 
 func (r *ruleMatcher) rule_then(cur *sequence.Word) {
 	p := r.NumPrevInSentence()
-	if p < 2 || !r.HasNextCont(1) {
+	if p < 2 || !r.HasPrevCont(1) || !r.HasNextCont(1) {
 		return
 	}
 
