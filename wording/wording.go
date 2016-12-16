@@ -154,6 +154,7 @@ var msgPrefixes = [...]msgPrefix{
 	{"it is true that", false},
 	{"in this case,", false},
 	// in ___'s/your tweet,
+	// in the tweet of ___,
 	{"I am confident", true},
 	{"I am sure", true},
 	{"I say", true},
@@ -181,6 +182,8 @@ var msgPrefixes = [...]msgPrefix{
 	{"it appears to be the case that", false},
 	{"it seems to be true that", false},
 	{"it appears to be true that", false},
+	{"it is likely that", false},
+	{"it is probable that", false},
 	// weak
 	{"I think", true},
 	{"I believe", true},
