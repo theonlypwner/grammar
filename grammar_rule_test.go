@@ -167,9 +167,12 @@ func TestRule_then(t *testing.T) {
 	// Exception 2
 	negative(t, "if it is better then you use it")
 	negative(t, "when it is better then get it")
-	// Boundary check: (1) <comparative> _ (1)
+	// Boundary check: no <comparative> before
 	negative(t, "Then they went somewhere")
+	// Boundary check: <comparative> _ |
 	negative(t, "Do it better then")
+	// Boundary check: <comparative> | _
+	negative(t, "Do you want more? Then you should do this.")
 }
 
 func TestRule_than(t *testing.T) {

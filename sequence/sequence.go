@@ -64,12 +64,12 @@ func (s *S) HasNext(n int) bool {
 	return s.pos+n < len(s.Words)
 }
 
-func (s *S) hasLoop(a, b int, maxLevel SpaceLevel) bool {
+func (s *S) hasLoop(a, b int, badLevel SpaceLevel) bool {
 	if a < 0 || b >= len(s.Spaces) {
 		return false
 	}
 	for i := a; i < b; i++ {
-		if s.Spaces[i].Level > maxLevel {
+		if s.Spaces[i].Level >= badLevel {
 			return false
 		}
 	}
@@ -96,10 +96,10 @@ func (s *S) HasNextInSentence(n int) bool {
 	return s.hasLoop(s.pos, s.pos+n, SL_SENTENCE)
 }
 
-func (s *S) numLoopPrev(maxLevel SpaceLevel) int {
+func (s *S) numLoopPrev(badLevel SpaceLevel) int {
 	n := 0
 	for i := s.pos - 1; i >= 0; i-- {
-		if s.Spaces[i].Level > maxLevel {
+		if s.Spaces[i].Level >= badLevel {
 			break
 		}
 		n++

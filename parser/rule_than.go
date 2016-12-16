@@ -14,7 +14,7 @@ func (r *ruleMatcher) rule_than(cur *sequence.Word) {
 	if !r.HasNextCont(1) {
 		return
 	}
-	p := r.NumPrevCont()
+	p := r.NumPrevInSentence()
 	if p < 2 {
 		return
 	}
