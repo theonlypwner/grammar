@@ -27,11 +27,14 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 	}
 
 	notShift := 0
-	if r.PrevWord(1).Lower == "not" {
+	prev1 := r.PrevWord(1)
+	if prev1.Lower == "not" {
 		if p < 2 {
 			return
 		}
+		prev1.MarkCommon()
 		notShift = 1
+		prev1 = r.PrevWord(2)
 	}
 
 	next1 := (*sequence.Word)(nil)
@@ -46,11 +49,15 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 		}
 	}
 
-	if r.PrevWord(1+notShift).Lower == "might" {
-		// Exception 3a: <determiner> {might of}
-		if p >= 2+notShift &&
-			r.PrevWord(2+notShift).IsDeterminer() {
-			return
+	switch {
+	default:
+		return
+	case prev1.Lower == "might":
+		// Exception 3a: <determiner> <adjP>? {might of}
+		for i := 2 + notShift; i <= p; i++ {
+			if r.PrevWord(i).IsDeterminer() {
+				return
+			}
 		}
 		// Exception 3b: {might of} <determiner|NP>
 		if next1 != nil &&
@@ -58,8 +65,7 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 				next1.IsPronounPersonal()) {
 			return
 		}
-	} else if !r.PrevWord(1 + notShift).IsModal() {
-		return
+	case prev1.IsModal():
 	}
 
 	// Exception 4: (more|less) (of) <NP>+ than <NP>+ {<modal> of} <NP>+
@@ -96,10 +102,7 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 	}
 
 	r.Matched("of")
-	r.PrevWord(1).MarkCommon()
-	if notShift != 0 {
-		r.PrevWord(2).MarkCommon()
-	}
+	prev1.MarkCommon()
 	r.PrevSpace(1).Replace("") // collapse space
 	cur.Replace("'ve")
 

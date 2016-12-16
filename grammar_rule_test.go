@@ -211,10 +211,13 @@ func TestRule_of(t *testing.T) {
 	// Exception 3a
 	negative(t, "Face the full might of our army!")
 	negative(t, "the might of some guy")
-	negative(t, "the full might of them")
+	negative(t, "the full might of those people")
+	negative(t, "the full might of people")
 	negative(t, "no might of him")
 	// Exception 3b
 	negative(t, "might of the people")
+	negative(t, "might of our people")
+	negative(t, "might of them")
 	// Exception 4
 	negative(t, "more of this than they would of that")
 	// Boundary check: (1) (not)? _ (1)
