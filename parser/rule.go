@@ -16,9 +16,9 @@ const (
 )
 
 var why_reasons = map[string][]string{
-	"its":         {"‘its’ belongs to ‘it’", "‘its’ belongs to ‘it’; ‘it's’ means ‘it is’"},
+	"its":         {"‘its’ belongs to ‘it’", "‘its’ belongs to ‘it’; ‘it's’ means ‘it is’ or ‘it has’"},
 	"your":        {"‘your’ doesn't mean ‘you are’; ‘you're’ does", "‘your’ belongs to ‘you’"},
-	"its_po":      {"‘it's’ doesn't belong to ‘it’; ‘its’ does", "‘it's’ means ‘it is’"},
+	"its_po":      {"‘it's’ doesn't belong to ‘it’; ‘its’ does", "‘it's’ means ‘it is’ or ‘it has’"},
 	"your_po":     {"‘you're’ doesn't belong to ‘you’; ‘your’ does", "‘you're’ means ‘you are’"},
 	"there_their": {"‘there’ doesn't belong to ‘them’; ‘their’ does"},
 	"whose":       {"‘whose’ belongs to ‘whom’; ‘who's’ means ‘who is’"},
