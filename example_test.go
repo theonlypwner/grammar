@@ -4,6 +4,7 @@ import (
 	"victorz.ca/grammar"
 
 	"fmt"
+	"io/ioutil"
 )
 
 func runTest(s string) (undetected bool) {
@@ -26,5 +27,15 @@ func ExampleMakeTweetReply() {
 				break
 			}
 		}
+	}
+}
+
+func ExampleLoad() {
+	for i := 0; i <= 6; i++ {
+		b, err := ioutil.ReadFile(fmt.Sprintf("in%v.txt", i))
+		if err != nil {
+			fmt.Println("[ERROR] ", err)
+		}
+		fmt.Println(grammar.Load(string(b)))
 	}
 }
