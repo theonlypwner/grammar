@@ -31,11 +31,15 @@ func ExampleMakeTweetReply() {
 }
 
 func ExampleLoad() {
+	// Test 7 files
 	for i := 0; i <= 6; i++ {
-		b, err := ioutil.ReadFile(fmt.Sprintf("in%v.txt", i))
+		f := fmt.Sprintf("in%v.txt", i)
+		b, err := ioutil.ReadFile(f)
 		if err != nil {
 			fmt.Println("[ERROR] ", err)
+			continue
 		}
+		fmt.Print(f, " ")
 		fmt.Println(grammar.Load(string(b)))
 	}
 }
