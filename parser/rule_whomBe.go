@@ -57,8 +57,9 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 			}
 			cur.Replace("who")
 		} else {
-			// Nothing precedes it; guess third-person singular
-			cur.ReplaceCap("who")
+			// Exception: "{Whom was} it from?"
+			// Exception: "{Whom were} they from?"
+			return
 		}
 	}
 

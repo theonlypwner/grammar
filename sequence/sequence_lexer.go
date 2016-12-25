@@ -22,7 +22,7 @@ func New(s string) S {
 		case '.', '!', '?':
 			level = SL_SENTENCE
 			fallthrough
-		case ',', ';', ':', '(', ')', '[', ']', '{', '}':
+		case ',', ';', ':', '(', ')', '[', ']', '{', '}', '…':
 			if level < SL_CLAUSE {
 				level = SL_CLAUSE
 			}

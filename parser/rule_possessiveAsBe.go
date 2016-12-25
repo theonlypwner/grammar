@@ -52,7 +52,7 @@ func (r *ruleMatcher) rule_possessiveAsBe(cur *sequence.Word) {
 
 	default:
 		if !(next1.IsPreposition() ||
-			next1.IsDeterminer() ||
+			(next1.IsDeterminer() && !next1.IsComparative() && next1.Lower != "most") ||
 			next1.IsPossessivePronoun()) {
 			return
 		}
