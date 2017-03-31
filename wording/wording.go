@@ -52,8 +52,6 @@ func engJoin(a ...string) string {
 
 // MakeTweet randomly generates a tweet message to correct a user.
 func MakeTweet(corrections, reasons []string, user string) string {
-	secondPerson := p(.65)
-
 	// Build the sentence!
 	clause := ""
 	modal := ""
@@ -65,6 +63,7 @@ func MakeTweet(corrections, reasons []string, user string) string {
 			clause += "that "
 		}
 	}
+	secondPerson := clause == "" || p(.65)
 	msgLoaders[rand.Intn(len(msgLoaders))](secondPerson, &clause, &modal, &verb)
 
 	// Build the entire sentence
@@ -77,8 +76,6 @@ func MakeTweet(corrections, reasons []string, user string) string {
 		} else {
 			user = fmt.Sprintf("you, %v,", user)
 		}
-	} else if clause == "" {
-		clause = "to "
 	}
 	result = clause +
 		user + " " +
