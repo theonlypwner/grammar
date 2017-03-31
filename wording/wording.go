@@ -69,26 +69,23 @@ func MakeTweet(corrections, reasons []string, user string) string {
 
 	// Build the entire sentence
 	result := ""
-	fixCap := clause != ""
 	if secondPerson { // 2nd person instead of 3rd (65%)
 		if p(.85) {
 			// Invert the subject so that we address one personally (85%)
-			clause = user + ", " + clause
+			clause = "to " + user + ", " + clause
 			user = "you"
-			fixCap = false
 		} else {
 			user = fmt.Sprintf("you, %v,", user)
-			fixCap = true
 		}
+	} else if clause == "" {
+		clause = "to "
 	}
 	result = clause +
 		user + " " +
 		modal + " " +
 		verb + " " +
 		engJoin(corrections...) + " instead."
-	if fixCap {
-		result = firstCap(result)
-	}
+	result = firstCap(result)
 
 	// Explain why, if we have space
 	if len(reasons) != 0 {
