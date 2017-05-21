@@ -69,13 +69,7 @@ func MakeTweet(corrections, reasons []string, user string) string {
 	// Build the entire sentence
 	result := ""
 	if secondPerson { // 2nd person instead of 3rd (65%)
-		if p(.85) {
-			// Invert the subject so that we address one personally (85%)
-			clause = "to " + user + ", " + clause
-			user = "you"
-		} else {
-			user = fmt.Sprintf("you, %v,", user)
-		}
+		user = fmt.Sprintf("you, %v,", user)
 	}
 	result = clause +
 		user + " " +
@@ -149,6 +143,7 @@ var msgPrefixes = [...]msgPrefix{
 	{"in this case,", false},
 	// in ___'s/your tweet,
 	// in the tweet of ___,
+	// I (consider, deem, declare) (___'s tweet) (invalid, incorrect)
 	{"I am confident", true},
 	{"I am sure", true},
 	{"I say", true},
@@ -163,6 +158,7 @@ var msgPrefixes = [...]msgPrefix{
 	{"I noticed", true},
 	{"I discovered", true},
 	{"I see", true},
+	// I found that, I notice (that)
 	// weaker
 	{"it seems", true},
 	{"to me, it seems", true},
