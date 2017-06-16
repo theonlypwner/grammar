@@ -19,9 +19,14 @@ func (r *ruleMatcher) rule_theirModal(cur *sequence.Word) {
 		return
 	}
 
+	// Exception 1: their <noun abbreviation>
+	if next1.Caps == sequence.WC_UPPER {
+		return
+	}
+
 	if r.HasPrevInSentence(2) {
-		// Exception 1: the difference between (there/they're), (they're/there)?, and {their is}
-		// Exception 1b: (they're/their) / (they're/there) / {their is} sometimes confused
+		// Exception 2: the difference between (there/they're), (they're/there)?, and {their is}
+		// Exception 2b: (they're/their) / (they're/there) / {their is} sometimes confused
 		// This exception set has three forms:
 		// 1. T / T / _
 		// 2. T and _

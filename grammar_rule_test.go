@@ -90,8 +90,11 @@ func TestRule_thereOwn(t *testing.T) {
 func TestRule_whoseBeen(t *testing.T) {
 	t.Parallel()
 
+	positive(t, "Whose been?", "[Who's] been?")
 	positive(t, "Whose been there?", "[Who's] been there?")
 	positive(t, "See that person, whose been there.", "person, [who's] been there")
+	// Exception
+	negative(t, "whose BEEN")
 	// Boundary check: _ (been)
 	negative(t, "Whose?")
 }
@@ -122,7 +125,12 @@ func TestRule_theirModal(t *testing.T) {
 
 	positive(t, "Their is", "[There] is")
 	positive(t, "Their must be something!", "[There] must be something!")
-	// Exception
+	// Exception 1
+	negative(t, "their IS")
+	negative(t, "their BE")
+	negative(t, "their ARE")
+	negative(t, "their MUST")
+	// Exception 2
 	negative(t, "the difference between there/they're/their is")
 	negative(t, "Those who know the difference between there/they're/their are.")
 	negative(t, "the difference between they're/there/their is")
@@ -236,6 +244,8 @@ func TestRule_yourAre(t *testing.T) {
 	t.Parallel()
 
 	positive(t, "your are", "[you] are")
+	// Exception
+	negative(t, "your ARE")
 	// Boundary check: _ (are)
 	negative(t, "your")
 }

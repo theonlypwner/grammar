@@ -18,6 +18,12 @@ func (r *ruleMatcher) rule_whoseBeen(cur *sequence.Word) {
 	if next1.Lower != "been" {
 		return
 	}
+
+	// Exception: whose BEEN (noun abbreviation)
+	if next1.Caps == sequence.WC_UPPER {
+		return
+	}
+
 	r.Matched("whose_has")
 	cur.ReplaceCap("who's")
 	next1.MarkCommon()
