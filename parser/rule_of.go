@@ -52,14 +52,15 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 	switch {
 	default:
 		return
-	case prev1.Lower == "might":
-		// Exception 3a: <determiner> <adjP>? {might of}
+	case prev1.Lower == "might" ||
+		prev1.Lower == "must":
+		// Exception 3a: <determiner> <adjP>? {(might|must) of}
 		for i := 2 + notShift; i <= p; i++ {
 			if r.PrevWord(i).IsDeterminer() {
 				return
 			}
 		}
-		// Exception 3b: {might of} <determiner|NP>
+		// Exception 3b: {(might|must) of} <determiner|NP>
 		if next1 != nil &&
 			(next1.IsDeterminer() ||
 				next1.IsPronounPersonal()) {
