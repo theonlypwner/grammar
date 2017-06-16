@@ -63,15 +63,14 @@ func MakeTweet(corrections, reasons []string, user string) string {
 			clause += "that "
 		}
 	}
-	secondPerson := clause == "" || p(.65)
+	secondPerson := p(.65)
+	if clause == "" || secondPerson { // 2nd person instead of 3rd (65%)
+		user = fmt.Sprintf("you, %v,", user)
+	}
 	msgLoaders[rand.Intn(len(msgLoaders))](secondPerson, &clause, &modal, &verb)
 
 	// Build the entire sentence
-	result := ""
-	if secondPerson { // 2nd person instead of 3rd (65%)
-		user = fmt.Sprintf("you, %v,", user)
-	}
-	result = clause +
+	result := clause +
 		user + " " +
 		modal + " " +
 		verb + " " +
@@ -130,6 +129,11 @@ var tweetNoun = [...]string{
 	"a tweet", "a post", "a status", "a message",
 	"a status update", "an update",
 }
+var tweetNounBase = [...]string{
+	// singular
+	"tweet", "post", "status", "message",
+	"status update", "update",
+}
 
 type msgPrefix struct {
 	clause string
@@ -141,9 +145,6 @@ var msgPrefixes = [...]msgPrefix{
 	{"it is the case that", false},
 	{"it is true that", false},
 	{"in this case,", false},
-	// in ___'s/your tweet,
-	// in the tweet of ___,
-	// I (consider, deem, declare) (___'s tweet) (invalid, incorrect)
 	{"I am confident", true},
 	{"I am sure", true},
 	{"I say", true},
@@ -198,17 +199,26 @@ var msgLoaders_MistakeVerb = [...]string{"miswrote", "botched", "blundered", "me
 var msgLoaders_MistakeVerbPerfect = msgLoaders_MistakeVerb[1:]
 var msgLoaders_MistakeVerbPast = msgLoaders_MistakeVerb[:len(msgLoaders_MistakeVerb)-1]
 var msgLoaders = [...]msgLoader{
-	func(_ bool, c, m, v *string) {
+	func(secondPerson bool, c, m, v *string) {
+		if secondPerson {
+			yourReplace(c)
+		}
 		*m = choice(modalsPerfect[:])
 		*v = choice(saidPast[:])
 		cleft(c, m)
 	},
-	func(_ bool, c, m, v *string) {
+	func(secondPerson bool, c, m, v *string) {
+		if secondPerson {
+			yourReplace(c)
+		}
 		*m = choice(modalsInfinitive[:])
 		*v = choice(saidInfinitive[:])
 		cleft(c, m)
 	},
-	func(_ bool, c, m, v *string) {
+	func(secondPerson bool, c, m, v *string) {
+		if secondPerson {
+			yourReplace(c)
+		}
 		clauseAppend(c, fmt.Sprintf("it %v %v better if ",
 			choice(msgLoadersCouldMightWould[:]),
 			choice(msgLoaders_HaveBeen_Be[:]),
@@ -216,7 +226,10 @@ var msgLoaders = [...]msgLoader{
 		*m = "had"
 		*v = choice(saidPast[:])
 	},
-	func(_ bool, c, m, v *string) {
+	func(secondPerson bool, c, m, v *string) {
+		if secondPerson {
+			yourReplace(c)
+		}
 		if p(.50) {
 			clauseAppend(c, "it is possible for ")
 			*m = "to"
@@ -283,6 +296,15 @@ var msgLoaders = [...]msgLoader{
 		}
 		cleft(c, m)
 	},
+	func(secondPerson bool, c, m, v *string) {
+		*c = fmt.Sprintf("I %v the %v %v ",
+			choice([]string{"consider", "deem", "declare"}),
+			choice(tweetNounBase[:]),
+			choice([]string{"of", "by"}),
+		)
+		*m = "invalid; it should"
+		*v = "be"
+	},
 }
 
 func clauseAppend(c *string, repl string) {
@@ -291,6 +313,12 @@ func clauseAppend(c *string, repl string) {
 		*c += repl
 	} else {
 		*c = repl
+	}
+}
+
+func yourReplace(c *string) {
+	if p(.30) {
+		*c = fmt.Sprintf("in your %v, ", choice(tweetNounBase[:]))
 	}
 }
 
