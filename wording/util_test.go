@@ -12,11 +12,11 @@ func TestFirstCap(t *testing.T) {
 		{"abcd", "Abcd"},
 		{"Already capitalized", "Already capitalized"},
 		{"--Already OK--", "--Already OK--"},
-		{"-e", "-E"},
+		{"-e", "-e"},
 		{"---", "---"},
 		{"F", "F"},
 		{"g", "G"},
-		{`123-{:[[;;""]:]hi`, `123-{:[[;;""]:]Hi`},
+		{`123-{:[[;;""]:]hi`, `123-{:[[;;""]:]hi`},
 		{"j-", "J-"},
 	} {
 		got := firstCap(c.in)
