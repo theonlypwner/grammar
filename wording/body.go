@@ -199,7 +199,7 @@ var msgLoaders = [...]msgLoader{
 	func(secondPerson bool, _ string) (string, string) {
 		prefix := fmt.Sprintf("I %v %v %v %v ",
 			choice("consider", "deem", "declare"),
-			choice("the", "this", "that"),
+			choice("the", "this"),
 			randTweetNoun(false),
 			choice("of", "by"),
 		)

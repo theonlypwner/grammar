@@ -11,15 +11,21 @@ func init() {
 	rand.Seed(time.Now().UnixNano())
 }
 
-// firstCap makes the first character title-case.
-func firstCap(s string) string {
+// firstCap makes the first character or letter title-case.
+// If onlyFirst is true, only the first character will be checked;
+// otherwise, the string s will be searched for a letter.
+func firstCap(s string, onlyFirst bool) string {
 	result := []rune(s)
-	for _, r := range result {
-		if !unicode.IsTitle(r) {
-			result[0] = unicode.ToTitle(r)
-			return string(result)
+	for i, r := range result {
+		if unicode.IsLetter(r) {
+			if !unicode.IsTitle(r) {
+				result[i] = unicode.ToTitle(r)
+				return string(result)
+			}
+			break
+		} else if onlyFirst {
+			break
 		}
-		break
 	}
 	return s
 }

@@ -24,14 +24,14 @@ func MakeTweet(corrections, reasons []string, user string) string {
 		user + " " +
 		suffix + " " +
 		engJoin(corrections...) + " instead."
-	result = firstCap(result)
+	result = firstCap(result, true)
 
 	// Explain why, if we have space
 	if len(reasons) != 0 {
 		remain := 140 - utf8.RuneCountInString(result)
 		// at least 3 characters have to be added
 		if remain >= 3 {
-			why := firstCap(engJoin(reasons...))
+			why := firstCap(engJoin(reasons...), false)
 			if remain >= 2+utf8.RuneCountInString(why) {
 				result += " " + why + "."
 			}
