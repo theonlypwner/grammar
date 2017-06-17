@@ -5,31 +5,7 @@ import (
 	"math/rand"
 )
 
-// Constants
-var modalsInfinitive = [...]string{
-	"should", "ought to", "could", "can", "meant to", "intended to",
-}
-var modalsPerfect = [...]string{
-	"should have", "ought to have", "could have",
-}
-var saidPast = [...]string{
-	// (simple [past) perfect]
-	"used", "said", "tweeted", "posted", "typed",
-}
-var saidInfinitive = [...]string{
-	// without "to"
-	"use", "say", "tweet", "post", "type", "write",
-}
-var tweetNoun = [...]string{
-	// singular
-	"a tweet", "a post", "a status", "a message",
-	"a status update", "an update",
-}
-var tweetNounBase = [...]string{
-	// singular
-	"tweet", "post", "status", "message",
-	"status update", "update",
-}
+// Prefix
 
 type msgPrefix struct {
 	clause string
@@ -83,122 +59,153 @@ var msgPrefixes = [...]msgPrefix{
 	{"I guess", true},
 }
 
-type msgLoader func(secondPerson bool, clause, modal, verb *string)
+func randPrefix() *msgPrefix {
+	return &msgPrefixes[rand.Intn(len(msgPrefixes))]
+}
 
-var msgLoaders_HaveBeen_Be = [...]string{"have been", "be"}
-var msgLoadersWrote = [...]string{"wrote", "made", "created", "tweeted", "posted", "typed", "written"}
-var msgLoadersWritePerfect = msgLoadersWrote[1:]
-var msgLoadersWritePast = msgLoadersWrote[:len(msgLoadersWrote)-1]
-var msgLoaders_Mistake = [...]string{"an error", "a mistake", "a solecism", "a typo"}
-var msgLoaders_MistakeVerb = [...]string{"miswrote", "botched", "blundered", "messed up", "malformed", "screwed up", "mistyped", "miswritten"}
-var msgLoaders_MistakeVerbPerfect = msgLoaders_MistakeVerb[1:]
-var msgLoaders_MistakeVerbPast = msgLoaders_MistakeVerb[:len(msgLoaders_MistakeVerb)-1]
+func (p *msgPrefix) String(that bool) string {
+	clause := p.clause + " "
+	if that && p.that {
+		clause += "that "
+	}
+	return clause
+}
+
+// Random verbs
+
+func randInfinitive() (modal, verb string) {
+	modal = choice("should", "ought to", "could", "can", "meant to", "intended to")
+	// without "to"
+	return modal, randInfinitiveVerb()
+}
+func randInfinitiveVerb() string {
+	// without "to"
+	return choice("use", "say", "tweet", "post", "type", "write")
+}
+
+func randPastPerfect() (modal, verb string) {
+	modal = choice("should have", "ought to have", "could have")
+	return modal, randPastVerb()
+}
+func randPastVerb() string {
+	// (simple [past) perfect]
+	return choice("used", "said", "tweeted", "posted", "typed")
+}
+
+// Random nouns
+
+func randTweetNoun(includeArticle bool) string {
+	if includeArticle {
+		return choice("a tweet", "a post", "a status", "a message",
+			"a status update", "an update")
+	}
+	return choice("tweet", "post", "status", "message",
+		"status update", "update")
+}
+
+func randMistakeNoun() string {
+	return choice("an error", "a mistake", "a solecism", "a typo")
+}
+
+type msgLoader func(secondPerson bool, clause string) (prefix, suffix string)
+
 var msgLoaders = [...]msgLoader{
-	func(secondPerson bool, c, m, v *string) {
-		if secondPerson {
-			yourReplace(c)
-		}
-		*m = choice(modalsPerfect[:]...)
-		*v = choice(saidPast[:]...)
-		cleft(c, m)
+	func(secondPerson bool, c string) (string, string) {
+		m, v := randPastPerfect()
+		return cleft(yourPrepend(secondPerson, c), m+" "+v)
 	},
-	func(secondPerson bool, c, m, v *string) {
-		if secondPerson {
-			yourReplace(c)
-		}
-		*m = choice(modalsInfinitive[:]...)
-		*v = choice(saidInfinitive[:]...)
-		cleft(c, m)
+	func(secondPerson bool, c string) (string, string) {
+		m, v := randInfinitive()
+		return cleft(yourPrepend(secondPerson, c), m+" "+v)
 	},
-	func(secondPerson bool, c, m, v *string) {
-		if secondPerson {
-			yourReplace(c)
-		}
-		clauseAppend(c, fmt.Sprintf("it %v %v better if ",
-			choice("could", "might", "would"),
-			choice(msgLoaders_HaveBeen_Be[:]...),
-		))
-		*m = "had"
-		*v = choice(saidPast[:]...)
+	func(secondPerson bool, c string) (string, string) {
+		return clauseAppend(yourPrepend(secondPerson, c),
+				fmt.Sprintf("it %v %v better if ",
+					choice("could", "might", "would"),
+					choice("have been", "be"),
+				)),
+			"had " + randPastVerb()
 	},
-	func(secondPerson bool, c, m, v *string) {
-		if secondPerson {
-			yourReplace(c)
-		}
+	func(secondPerson bool, c string) (string, string) {
+		c = yourPrepend(secondPerson, c)
+		s := ""
 		if p(.50) {
-			clauseAppend(c, "it is possible for ")
-			*m = "to"
-			*v = choice(saidInfinitive[:]...)
+			c = clauseAppend(c, "it is possible for ")
+			s = "to " + randInfinitiveVerb()
 		} else {
-			clauseAppend(c, "it was possible for ")
-			*m = "to have"
-			*v = choice(saidPast[:]...)
+			c = clauseAppend(c, "it was possible for ")
+			s = "to have " + randPastVerb()
 		}
+		return c, s
 	},
-	func(secondPerson bool, c, m, v *string) {
+	func(secondPerson bool, c string) (string, string) {
+		var suffix, m, v string
 		if p(.50) { // infinitive rather than perfect (50%)
-			*m = choice(modalsInfinitive[:]...)
-			*v = choice(saidInfinitive[:]...)
+			m, v = randInfinitive()
 		} else {
-			*m = choice(modalsPerfect[:]...)
-			*v = choice(saidPast[:]...)
+			m, v = randPastPerfect()
 		}
 		if p(.50) { // perfect (have) instead of simple past (50%)
 			h := "have"
 			if !secondPerson {
 				h = "has"
 			}
-			*m = fmt.Sprintf("%v %v %v and %v",
+			suffix = fmt.Sprintf("%v %v %v and %v %v",
 				h,
-				choice(msgLoadersWritePerfect...),
-				choice(msgLoaders_Mistake[:]...),
-				*m,
+				choice("written", "made", "created", "tweeted", "posted", "typed"),
+				randMistakeNoun(),
+				m,
+				v,
 			)
 		} else {
-			*m = fmt.Sprintf("%v %v and %v",
-				choice(msgLoadersWritePast...),
-				choice(msgLoaders_Mistake[:]...),
-				*m,
+			suffix = fmt.Sprintf("%v %v and %v %v",
+				choice("wrote", "made", "created", "tweeted", "posted", "typed"),
+				randMistakeNoun(),
+				m,
+				v,
 			)
 		}
-		cleft(c, m)
+		return cleft(c, suffix)
 	},
-	func(secondPerson bool, c, m, v *string) {
+	func(secondPerson bool, c string) (string, string) {
+		var suffix, m, v string
 		if p(.50) { // infinitive rather than perfect (50%)
-			*m = choice(modalsInfinitive[:]...)
-			*v = choice(saidInfinitive[:]...)
+			m, v = randInfinitive()
 		} else {
-			*m = choice(modalsPerfect[:]...)
-			*v = choice(saidPast[:]...)
+			m, v = randPastPerfect()
 		}
 		if p(.50) { // perfect (have) instead of simple past (50%)
 			h := "have"
 			if !secondPerson {
 				h = "has"
 			}
-			*m = fmt.Sprintf("%v %v %v and %v",
+			suffix = fmt.Sprintf("%v %v %v and %v %v",
 				h,
-				choice(msgLoaders_MistakeVerbPerfect...),
-				choice(tweetNoun[:]...),
-				*m,
+				choice("miswritten", "botched", "blundered", "messed up", "malformed", "screwed up", "mistyped"),
+				randTweetNoun(true),
+				m,
+				v,
 			)
 		} else {
-			*m = fmt.Sprintf("%v %v and %v",
-				choice(msgLoaders_MistakeVerbPast...),
-				choice(tweetNoun[:]...),
-				*m,
+			suffix = fmt.Sprintf("%v %v and %v %v",
+				choice("miswrote", "botched", "blundered", "messed up", "malformed", "screwed up", "mistyped"),
+				randTweetNoun(true),
+				m,
+				v,
 			)
 		}
-		cleft(c, m)
+		return cleft(c, suffix)
 	},
-	func(secondPerson bool, c, m, v *string) {
-		*c = fmt.Sprintf("I %v the %v %v ",
+	func(secondPerson bool, _ string) (string, string) {
+		prefix := fmt.Sprintf("I %v %v %v %v ",
 			choice("consider", "deem", "declare"),
-			choice(tweetNounBase[:]...),
+			choice("the", "this", "that"),
+			randTweetNoun(false),
 			choice("of", "by"),
 		)
-		*m = choice("invalid", "incorrect", "wrong", "erroneous", "unacceptable", "unsuitable") + ";"
-		*v = "it should " + choice("be", "say", "read")
+		suffix := choice("invalid", "incorrect", "wrong", "erroneous", "unacceptable", "unsuitable") +
+			"; it should " + choice("be", "say", "read")
+		return prefix, suffix
 	},
 }
 
@@ -206,24 +213,30 @@ func randLoader() msgLoader {
 	return msgLoaders[rand.Intn(len(msgLoaders))]
 }
 
-func clauseAppend(c *string, repl string) {
+func clauseAppend(c, repl string) string {
 	if p(.50) {
 		// 50% chance to append to the first clause
-		*c += repl
+		c += repl
 	} else {
-		*c = repl
+		c = repl
 	}
+	return c
 }
 
-func yourReplace(c *string) {
-	if p(.30) {
-		*c = fmt.Sprintf("in your %v, ", choice(tweetNounBase[:]...))
+func yourPrepend(ok bool, c string) string {
+	if ok && p(.30) {
+		return fmt.Sprintf("in %v %v, ",
+			choice("your", "this"),
+			randTweetNoun(false),
+		)
 	}
+	return c
 }
 
-func cleft(clause, modal *string) {
+func cleft(prefix, suffix string) (string, string) {
 	if p(.10) { // Cleft sentence (10%)
-		*clause += "it is "
-		*modal = choice("who ", "that ") + *modal
+		prefix += "it is "
+		suffix = choice("who ", "that ") + suffix
 	}
+	return prefix, suffix
 }

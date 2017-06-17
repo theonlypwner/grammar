@@ -3,7 +3,6 @@ package wording
 
 import (
 	"fmt"
-	"math/rand"
 	"unicode/utf8"
 )
 
@@ -11,26 +10,19 @@ import (
 func MakeTweet(corrections, reasons []string, user string) string {
 	// Build the sentence!
 	clause := ""
-	modal := ""
-	verb := ""
 	if p(.75) { // Add prefix (75%)
-		prefix := msgPrefixes[rand.Intn(len(msgPrefixes))]
-		clause = prefix.clause + " "
-		if prefix.that && p(.50) { // use "that" (50%)
-			clause += "that "
-		}
+		clause = randPrefix().String(p(.50)) // use "that" (50%)
 	}
 	secondPerson := clause == "" || p(.65)
 	if secondPerson { // 2nd person instead of 3rd (65%)
 		user = fmt.Sprintf("you, %v,", user)
 	}
-	randLoader()(secondPerson, &clause, &modal, &verb)
+	prefix, suffix := randLoader()(secondPerson, clause)
 
 	// Build the entire sentence
-	result := clause +
+	result := prefix +
 		user + " " +
-		modal + " " +
-		verb + " " +
+		suffix + " " +
 		engJoin(corrections...) + " instead."
 	result = firstCap(result)
 
