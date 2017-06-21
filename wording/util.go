@@ -30,8 +30,8 @@ func firstCap(s string, onlyFirst bool) string {
 	return s
 }
 
-// englishJoin joins a (slice of strings) using an English conjunction.
-func englishJoin(conjunction string, a ...string) string {
+// englishJoin joins a slice of strings using an English conjunction.
+func englishJoin(conjunction string, a []string) string {
 	switch len(a) {
 	case 0:
 		return ""
@@ -42,13 +42,13 @@ func englishJoin(conjunction string, a ...string) string {
 	default:
 		commaJoined := strings.Join(a[:len(a)-1], ", ")
 		// omit serial comma because Twitter only allows 140 characters
-		return englishJoin(conjunction, commaJoined, a[len(a)-1])
+		return commaJoined + " " + conjunction + " " + a[len(a)-1]
 	}
 }
 
 // engJoin calls englishJoin with "and"
-func engJoin(a ...string) string {
-	return englishJoin("and", a...)
+func engJoin(a []string) string {
+	return englishJoin("and", a)
 }
 
 func p(x float64) bool { return rand.Float64() < x }

@@ -43,7 +43,7 @@ func TestEngJoin(t *testing.T) {
 		{[]string{"a", "b", "c"}, "a, b and c"},
 		{[]string{"a", "b", "c", "d"}, "a, b, c and d"},
 	} {
-		got := engJoin(c.in...)
+		got := engJoin(c.in)
 		if got != c.want {
 			t.Errorf("engJoin(%q) == %q, want %q", c.in, got, c.want)
 		}

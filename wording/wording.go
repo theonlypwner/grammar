@@ -23,7 +23,7 @@ func MakeTweet(corrections, reasons []string, user string) string {
 	result := prefix +
 		user + " " +
 		suffix + " " +
-		engJoin(corrections...) + " instead."
+		engJoin(corrections) + " instead."
 	result = firstCap(result, true)
 
 	// Explain why, if we have space
@@ -31,7 +31,7 @@ func MakeTweet(corrections, reasons []string, user string) string {
 		remain := 140 - utf8.RuneCountInString(result)
 		// at least 3 characters have to be added
 		if remain >= 3 {
-			why := firstCap(engJoin(reasons...), false)
+			why := firstCap(engJoin(reasons), false)
 			if remain >= 2+utf8.RuneCountInString(why) {
 				result += " " + why + "."
 			}
