@@ -1,5 +1,10 @@
 package sequence
 
+func appendWS(seq *S, s string, word, space, i int, level SpaceLevel) {
+	seq.Words = append(seq.Words, NewWord(s[word:space]))
+	seq.Spaces = append(seq.Spaces, NewSpace(s[space:i], level))
+}
+
 // New makes a Sequence from an input string.
 func New(s string) S {
 	seq := S{}
@@ -11,11 +16,6 @@ func New(s string) S {
 	word := 0
 	space := -1
 	level := SL_SPACE
-
-	appendWS := func(i int) {
-		seq.Words = append(seq.Words, NewWord(s[word:space]))
-		seq.Spaces = append(seq.Spaces, NewSpace(s[space:i], level))
-	}
 
 	for i, r := range s {
 		switch r {
@@ -34,7 +34,7 @@ func New(s string) S {
 
 		default:
 			if space != -1 {
-				appendWS(i)
+				appendWS(&seq, s, word, space, i, level)
 
 				word = i
 				space = -1
@@ -47,7 +47,7 @@ func New(s string) S {
 	if space == -1 {
 		space = len(s)
 	}
-	appendWS(len(s))
+	appendWS(&seq, s, word, space, len(s), level)
 
 	// Shrink to fit
 	seq.Words = append(([]Word)(nil), seq.Words...)

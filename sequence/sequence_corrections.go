@@ -16,6 +16,19 @@ func (s *S) String() string {
 }
 */
 
+func addLast(result *[]string, last *bytes.Buffer, lastPunctuation string) {
+	if len(lastPunctuation) != 0 {
+		for _, r := range lastPunctuation {
+			if r == '?' || r == '!' {
+				last.WriteRune(r)
+			}
+			// ignore repeated ??? or !!!
+			break
+		}
+	}
+	*result = append(*result, last.String())
+}
+
 // Corrections returns a slice of strings showing differences in the new sequence.
 func (s *S) Corrections() []string {
 	var result []string
@@ -29,17 +42,6 @@ func (s *S) Corrections() []string {
 	// Include: [<corrected>] <common>{0,2} <near> (on both sides)
 	// Allow one gap: <right boundary> <word> <left boundary>
 	// Add special punctuation: <final word> [?!]
-
-	addLast := func() {
-		lastPunctuation := s.Spaces[lastEnd].Text
-		if len(lastPunctuation) != 0 {
-			c := lastPunctuation[0]
-			if c == '?' || c == '!' {
-				last.WriteByte(c)
-			}
-		}
-		result = append(result, last.String())
-	}
 
 	for i := 0; i < n; i++ {
 		if !s.Words[i].New {
@@ -86,7 +88,7 @@ func (s *S) Corrections() []string {
 
 		case lastEnd != END_NONE:
 			// no overlap, but not first
-			addLast()
+			addLast(&result, &last, s.Spaces[lastEnd].Text)
 			last.Reset()
 		}
 		for j := L; j != i; j++ {
@@ -107,7 +109,7 @@ func (s *S) Corrections() []string {
 		lastEnd = R
 	}
 	if lastEnd != END_NONE {
-		addLast()
+		addLast(&result, &last, s.Spaces[lastEnd].Text)
 	}
 
 	return result

@@ -81,6 +81,7 @@ func WordStats(s string) (total, upper, title int) {
 var rFixALLCAPS = regexp.MustCompile(`(?m)[^ .!?"][^.!?"]*`).ReplaceAllStringFunc
 
 func rFixALLCAPSRepl(s string) string {
+	// Capitalize First Character In Words
 	f := unicode.ToTitle
 	return strings.Map(func(r rune) rune {
 		r = f(r)

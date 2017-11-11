@@ -65,9 +65,10 @@ func (w *Word) ReplaceCap(newText string) {
 	switch w.Caps {
 	case WC_TITLE:
 		r, size := utf8.DecodeRuneInString(newText)
-		if r != utf8.RuneError && !unicode.IsTitle(r) {
-			newText = string(unicode.ToTitle(r)) + newText[size:]
+		if r == utf8.RuneError || unicode.IsTitle(r) {
+			break
 		}
+		newText = string(unicode.ToTitle(r)) + newText[size:]
 
 	case WC_UPPER:
 		newText = strings.ToUpper(newText)
