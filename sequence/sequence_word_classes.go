@@ -249,7 +249,7 @@ func (w *Word) IsPreposition() bool {
 		//    "on top of",
 		"out",     // -of/from
 		"outside", // -of also noun
-		// "over", // your over(-)excited <nounp>
+		"over",    // your over(-)excited <nounp>
 		// "owing to",
 		// "pace", // outdated
 		// "past", // also noun
@@ -272,7 +272,7 @@ func (w *Word) IsPreposition() bool {
 		"throughout",
 		"till", // informal until, also conjunction
 		// "times", // also noun
-		// "to", // your too-<adj> <nounp>
+		"to", // your too-<adj> <nounp>
 		"toward",
 		"towards",
 		"under", // your under(-)prepared <nounp>

@@ -75,14 +75,20 @@ func TestRule_thereOwn(t *testing.T) {
 	t.Parallel()
 
 	positive(t, "To each there own", "To each [their] own")
-	// Exception
-	negative(t, "Do any people out there own something?")
-	negative(t, "Does anyone out there own this item?")
-	negative(t, "Does someone out there own this?")
-	negative(t, "Does no one out there own that?")
-	negative(t, "Do any of you out there own these items?")
-	// Exception with fused word
-	negative(t, "anyone out there own it?")
+	// Exception 1
+	negative(t, "Do any people there own something?")
+	negative(t, "Does anyone there own this item?")
+	negative(t, "Does someone there own this?")
+	negative(t, "Does no one there own that?")
+	negative(t, "Do any of you there own these items?")
+	// Exception 1 with fused word
+	negative(t, "anyone there own it?")
+	// Exception 2
+	negative(t, "People out there own it.")
+	negative(t, "People over there own it.")
+	negative(t, "People from there own it.")
+	negative(t, "People close to there own it.")
+	negative(t, "People near there own it.")
 	// Boundary check: (there) _
 	negative(t, "Own this item now")
 }

@@ -22,7 +22,7 @@ func (r *ruleMatcher) rule_thereOwn(cur *sequence.Word, rerun *checkGroup) {
 		return
 	}
 
-	// Exception: Do/es (any/some/no-/no )one out {there own} something?"
+	// Exception 1: "Do/es (any/some/no-/no )one {there own} something?"
 	prev := prev1
 	for i := 2; i <= p; i++ {
 		cur := r.PrevWord(i)
@@ -38,6 +38,11 @@ func (r *ruleMatcher) rule_thereOwn(cur *sequence.Word, rerun *checkGroup) {
 		}
 		// no need to find ['do', 'does'] since people sometimes skip it
 		prev = cur
+	}
+
+	// Exception 2: "<NP>+ <preposition> there own"
+	if p >= 2 && r.PrevWord(2).IsPreposition() {
+		return
 	}
 
 	r.Matched("there_their")
