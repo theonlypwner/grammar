@@ -75,6 +75,8 @@ func TestRule_thereOwn(t *testing.T) {
 	t.Parallel()
 
 	positive(t, "To each there own", "To each [their] own")
+	positive(t, "On there own time", "On [their] own time")
+	positive(t, "Over there own item", "Over [their] own item")
 	// Exception 1
 	negative(t, "Do any people there own something?")
 	negative(t, "Does anyone there own this item?")

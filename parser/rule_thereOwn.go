@@ -41,7 +41,7 @@ func (r *ruleMatcher) rule_thereOwn(cur *sequence.Word, rerun *checkGroup) {
 	}
 
 	// Exception 2: "<NP>+ <preposition> there own"
-	if p >= 2 && r.PrevWord(2).IsPreposition() {
+	if p >= 3 && r.PrevWord(2).IsPreposition() {
 		return
 	}
 
