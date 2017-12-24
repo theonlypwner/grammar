@@ -25,6 +25,19 @@ func negative(t *testing.T, s string) {
 	}
 }
 
+func TestRule_allotOf(t *testing.T) {
+	t.Parallel()
+
+	positive(t, "allot of it", "[a lot] of it")
+	positive(t, "Allot of it", "[A lot] of it")
+	positive(t, "Allot of this is allot of that", "[A lot] of this is [a lot] of that")
+	negative(t, "Allot to it")
+
+	// Boundary check: _ (1)
+	negative(t, "allot")
+	negative(t, "they allot")
+}
+
 func TestRule_possessiveAsBe(t *testing.T) {
 	t.Parallel()
 

@@ -34,6 +34,7 @@ var why_reasons = map[string][]string{
 	"your-are":    {"‘you’ are; ‘your’ belongs to ‘you’", "‘you’ are rather than ‘your’ are"},
 	"supposed-to": {"‘supposed’ isn't a bare infinitive", "‘supposed’ is really a participle"},
 	"whom":        {"‘whom’ is not nominative", "‘whom’ isn't in subjective case"},
+	"allot-of":    {"‘allot’ is a verb"},
 }
 
 type word *sequence.Word
@@ -103,8 +104,12 @@ func (r *ruleMatcher) doChecks(run checkGroup) (rerun checkGroup) {
 		case "own":
 			r.rule_itsOwn(cur, &rerun)
 			r.rule_thereOwn(cur, &rerun)
-		//case "going": // DISABLED
-		// r.rule_imGoing(cur)
+
+		//case "going":
+		// r.rule_imGoing(cur) // DISABLED
+
+		case "allot":
+			r.rule_allotOf(cur)
 		case "whose":
 			r.rule_whoseBeen(cur)
 		case "they're":
