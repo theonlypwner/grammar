@@ -28,7 +28,7 @@ func MakeTweet(corrections, reasons []string, user string) string {
 
 	// Explain why, if we have space
 	if len(reasons) != 0 {
-		remain := 140 - utf8.RuneCountInString(result)
+		remain := 280 - utf8.RuneCountInString(result)
 		// at least 3 characters have to be added
 		if remain >= 3 {
 			why := firstCap(engJoin(reasons), false)

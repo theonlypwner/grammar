@@ -41,7 +41,7 @@ func englishJoin(conjunction string, a []string) string {
 		return a[0] + " " + conjunction + " " + a[1]
 	default:
 		commaJoined := strings.Join(a[:len(a)-1], ", ")
-		// omit serial comma because Twitter only allows 140 characters
+		// omit serial comma because of Twitter's character limit
 		return commaJoined + " " + conjunction + " " + a[len(a)-1]
 	}
 }
