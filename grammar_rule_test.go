@@ -324,6 +324,7 @@ func TestRule_whomBe(t *testing.T) {
 	positive(t, "You see me, whom is your friend.", "see me, [who am] your friend")
 	// REMOVED: Guess third-person singular if nothing precedes it
 	// positive(t, "Whom is it?", "[Who] is it?")
+	negative(t, "Whom is it for?")
 	// A preceding word is required for verb conjugations
 	negative(t, "UnknownEntity whom is")
 	// Other verbs might be valid for "whom"
