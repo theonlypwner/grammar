@@ -3,8 +3,6 @@ package parser
 
 import (
 	"sequence"
-
-	"math/rand"
 )
 
 type checkGroup int
@@ -15,26 +13,28 @@ const (
 	check_YOUR_ARE
 )
 
-var why_reasons = map[string][]string{
-	"its":         {"‘its’ belongs to ‘it’", "‘its’ belongs to ‘it’; ‘it's’ means ‘it is’ or ‘it has’"},
-	"your":        {"‘your’ doesn't mean ‘you are’; ‘you're’ does", "‘your’ belongs to ‘you’"},
-	"its_po":      {"‘it's’ doesn't belong to ‘it’; ‘its’ does", "‘it's’ means ‘it is’ or ‘it has’"},
-	"your_po":     {"‘you're’ doesn't belong to ‘you’; ‘your’ does", "‘you're’ means ‘you are’"},
-	"there_their": {"‘there’ doesn't belong to ‘them’; ‘their’ does"},
-	"whose":       {"‘whose’ belongs to ‘whom’; ‘who's’ means ‘who is’"},
-	"whose_has":   {"‘whose’ belongs to ‘whom’; ‘who's’ means ‘who has’"},
-	"theyre_be":   {"‘they're’ means ‘they are’, not ‘there’"},
-	"their_be":    {"‘their’ belongs to ‘them’", "‘there’ is ‘their’ item"},
-	"theyre_are":  {"‘they're’ means ‘they are’, not ‘they’ or ‘there’"},
-	"hear":        {"I ‘hear’ but am ‘here’"},
-	"board":       {"‘bored’ is a verb; ‘board’ is a noun", "‘board’ is a noun; ‘bored’ is a verb"},
-	"than":        {"‘than’ isn't the adverb ‘then’"},
-	"then":        {"‘then’ doesn't compare like ‘than’", "‘then’ doesn't compare; ‘than’ does"},
-	"of":          {"‘of’ isn't a verb", "‘have’ is a real verb"},
-	"your-are":    {"‘you’ are; ‘your’ belongs to ‘you’", "‘you’ are rather than ‘your’ are"},
-	"supposed-to": {"‘supposed’ isn't a bare infinitive", "‘supposed’ is really a participle"},
-	"whom":        {"‘whom’ is not nominative", "‘whom’ isn't in subjective case"},
-	"allot-of":    {"‘allot’ is a verb"},
+var why_reason = map[string]string{
+	"its":   "‘its’ is possessive; ‘it's’ means ‘it is’ or ‘it has’",
+	"your":  "‘your’ is possessive; ‘you're’ means ‘you are’",
+	"whose": "‘whose’ is possessive; ‘who's’ means ‘who is’",
+
+	"its_po":  "‘it's’ means ‘it is’ or ‘it has’, but ‘its’ is possessive",
+	"your_po": "‘you're’ means ‘you are’; ‘your’ is possessive",
+
+	"there_their": "‘there’ is not possessive, but ‘their’ is",
+	"whose_has":   "‘whose’ is possessive; ‘who's’ means ‘who has’",
+	"theyre_be":   "‘they're’ means ‘they are’, not ‘there’",
+	"theyre_are":  "‘they're’ means ‘they are’, not ‘they’ or ‘there’",
+	"their_be":    "‘their’ is possessive; ‘there’ is a pronoun or an adverb",
+	"hear":        "I am ‘here’ to ‘hear’",
+	"board":       "‘board’ is a noun; ‘bored’ is a verb",
+	"than":        "‘than’ compares, but ‘then’ is an adverb",
+	"then":        "unlike the adverb ‘then’, ‘than’ compares",
+	"of":          "‘of’ is not a verb like ‘have’ is",
+	"your-are":    "‘your’ is a possessive determiner; ‘you’ is a pronoun",
+	"supposed-to": "‘supposed’ is a participle, not a bare infinitive",
+	"whom":        "unlike ‘whom’, ‘who’ is a subject",
+	"allot-of":    "‘allot’ is a verb; ‘a lot’ is a noun or adverb",
 }
 
 type word *sequence.Word
@@ -53,9 +53,8 @@ func (r *ruleMatcher) Matched(reason string) {
 	}
 	r.matched[reason] = struct{}{}
 	why := "[ERROR]"
-	if reasons, ok := why_reasons[reason]; ok {
-		// randomly pick a reason
-		why = reasons[rand.Intn(len(reasons))]
+	if reasonText, ok := why_reason[reason]; ok {
+		why = reasonText
 	}
 	r.why = append(r.why, why)
 }
