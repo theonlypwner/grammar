@@ -125,7 +125,7 @@ func (r *ruleMatcher) doChecks(run checkGroup) (rerun checkGroup) {
 			r.rule_of(cur)
 		case "supposed":
 			r.rule_supposedTo(cur, &rerun)
-		case "whom", "whomever":
+		case "whom", "whomever", "whomsoever":
 			r.rule_whomBe(cur)
 		}
 	}

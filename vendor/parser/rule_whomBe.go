@@ -5,9 +5,9 @@ import (
 )
 
 /*
-Keyword: whom/whomever
+Keyword: whom/whomever/whomsoever
 Src: _ <be>
-Dst: [who/whoever] ...
+Dst: [who/whoever/whosoever] ...
 */
 
 func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
@@ -30,9 +30,12 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 		next1New = "is"
 	}
 
-	if cur.Lower == "whomever" {
+	switch cur.Lower {
+	case "whomever":
 		cur.ReplaceCap("whoever")
-	} else {
+	case "whomsoever":
+		cur.ReplaceCap("whosoever")
+	default:
 		if r.HasPrevInSentence(1) {
 			switch r.PrevWord(1).Lower {
 			case "i", "me", "myself":

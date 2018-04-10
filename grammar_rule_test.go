@@ -306,10 +306,14 @@ func TestRule_whomBe(t *testing.T) {
 	positive(t, "those whom were", "those [who] were")
 	positive(t, "see whomever is", "see [whoever] is")
 	positive(t, "Whomever is", "[Whoever] is")
-	// "Whoever" is always singular
+	positive(t, "Whomsoever is", "[Whosoever] is")
+	// "Whoever" and "Whomsoever" are always singular
 	positive(t, "Whomever am", "[Whoever is]")
 	positive(t, "Whomever be", "[Whoever is]")
 	positive(t, "Whomever are", "[Whoever is]")
+	positive(t, "Whomsoever am a", "[Whosoever is] a")
+	positive(t, "Whomsoever be a", "[Whosoever is] a")
+	positive(t, "Whomsoever are a", "[Whosoever is] a")
 	// Correct improper verbs
 	positive(t, "I whom are", "I [who am]")
 	positive(t, "I whom were", "I [who was]")
