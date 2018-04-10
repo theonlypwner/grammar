@@ -40,8 +40,8 @@ func TestEngJoin(t *testing.T) {
 		{[]string{}, ""},
 		{[]string{"a"}, "a"},
 		{[]string{"a", "b"}, "a and b"},
-		{[]string{"a", "b", "c"}, "a, b and c"},
-		{[]string{"a", "b", "c", "d"}, "a, b, c and d"},
+		{[]string{"a", "b", "c"}, "a, b, and c"},
+		{[]string{"a", "b", "c", "d"}, "a, b, c, and d"},
 	} {
 		got := engJoin(c.in)
 		if got != c.want {
