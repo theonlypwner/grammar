@@ -33,8 +33,17 @@ var why_reason = map[string]string{
 	"of":          "‘of’ is not a verb like ‘have’ is",
 	"your-are":    "‘your’ is a possessive determiner; ‘you’ is a pronoun",
 	"supposed-to": "‘supposed’ is a participle, not a bare infinitive",
-	"whom":        "unlike ‘whom’, ‘who’ is a subject",
 	"allot-of":    "‘allot’ is a verb; ‘a lot’ is a noun or adverb",
+
+	"whom_is":        "unlike ‘whom’, ‘who’ is the subject of ‘is’",
+	"whom_am":        "unlike ‘whom’, ‘who’ is the subject of ‘am’",
+	"whom_are":       "unlike ‘whom’, ‘who’ is the subject of ‘are’",
+	"whom_was":       "unlike ‘whom’, ‘who’ is the subject of ‘was’",
+	"whom_were":      "unlike ‘whom’, ‘who’ is the subject of ‘were’",
+	"whomever_is":    "unlike ‘whomever’, ‘whoever’ is the subject of ‘is’",
+	"whomever_was":   "unlike ‘whomever’, ‘whoever’ is the subject of ‘was’",
+	"whomsoever_is":  "unlike ‘whomsoever’, ‘whosoever’ is the subject of ‘is’",
+	"whomsoever_was": "unlike ‘whomsoever’, ‘whosoever’ is the subject of ‘was’",
 }
 
 type word *sequence.Word
@@ -52,7 +61,7 @@ func (r *ruleMatcher) Matched(reason string) {
 		return
 	}
 	r.matched[reason] = struct{}{}
-	why := "[ERROR]"
+	why := "[THERE WAS AN ERROR GENERATING AN EXPLANATION]"
 	if reasonText, ok := why_reason[reason]; ok {
 		why = reasonText
 	}

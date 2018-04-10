@@ -30,12 +30,14 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 		next1New = "is"
 	}
 
-	switch cur.Lower {
+	rule := cur.Lower
+
+	switch rule {
 	case "whomever":
 		cur.ReplaceCap("whoever")
 	case "whomsoever":
 		cur.ReplaceCap("whosoever")
-	default:
+	default: // "whom"
 		if r.HasPrevInSentence(1) {
 			switch r.PrevWord(1).Lower {
 			case "i", "me", "myself":
@@ -70,5 +72,5 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 	if next1.Lower != next1New {
 		next1.Replace(next1New)
 	}
-	r.Matched("whom")
+	r.Matched(rule + "_" + next1New)
 }
