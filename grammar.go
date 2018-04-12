@@ -2,10 +2,10 @@
 package grammar
 
 import (
-	"parser"
-	"sequence"
-	"transform"
-	"wording"
+	"victorz.ca/grammar/parser"
+	"victorz.ca/grammar/sequence"
+	"victorz.ca/grammar/transform"
+	"victorz.ca/grammar/wording"
 )
 
 // Load runs some text through the transformer, lexer, parser, and formatter.

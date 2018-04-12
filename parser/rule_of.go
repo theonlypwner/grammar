@@ -1,7 +1,7 @@
 package parser
 
 import (
-	"sequence"
+	"victorz.ca/grammar/sequence"
 )
 
 /*
