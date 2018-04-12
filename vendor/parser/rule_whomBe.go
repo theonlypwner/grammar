@@ -77,5 +77,5 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 	if next1.Lower != next1New {
 		next1.Replace(next1New)
 	}
-	r.Matched("whom", fmt.Sprintf("unlike ‘%v’, ‘%v’ is the subject of ‘%v’", rule, next1New))
+	r.Matched("whom", fmt.Sprintf("unlike ‘%v’, ‘%v’ is the subject of ‘%v’", rule, repl, next1New))
 }
