@@ -40,7 +40,7 @@ func (r *ruleMatcher) rule_theirModal(cur *sequence.Word) {
 		}
 	}
 
-	r.Matched("their_be")
+	r.Matched("their_be", "‘their’ is possessive; ‘there’ is a pronoun or an adverb")
 	cur.ReplaceCap("there")
 	next1.MarkCommon()
 }

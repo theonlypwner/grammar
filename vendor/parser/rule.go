@@ -13,39 +13,6 @@ const (
 	check_YOUR_ARE
 )
 
-var why_reason = map[string]string{
-	"its":   "‘its’ is possessive; ‘it's’ means ‘it is’ or ‘it has’",
-	"your":  "‘your’ is possessive; ‘you're’ means ‘you are’",
-	"whose": "‘whose’ is possessive; ‘who's’ means ‘who is’",
-
-	"its_po":  "‘it's’ means ‘it is’ or ‘it has’, but ‘its’ is possessive",
-	"your_po": "‘you're’ means ‘you are’; ‘your’ is possessive",
-
-	"there_their": "‘there’ is not possessive, but ‘their’ is",
-	"whose_has":   "‘whose’ is possessive; ‘who's’ means ‘who has’",
-	"theyre_be":   "‘they're’ means ‘they are’, not ‘there’",
-	"theyre_are":  "‘they're’ means ‘they are’, not ‘they’ or ‘there’",
-	"their_be":    "‘their’ is possessive; ‘there’ is a pronoun or an adverb",
-	"hear":        "I am ‘here’ to ‘hear’",
-	"board":       "‘board’ is a noun; ‘bored’ is a verb",
-	"than":        "‘than’ compares, but ‘then’ is an adverb",
-	"then":        "unlike the adverb ‘then’, ‘than’ compares",
-	"of":          "‘of’ is not a verb like ‘have’ is",
-	"your-are":    "‘your’ is a possessive determiner; ‘you’ is a pronoun",
-	"supposed-to": "‘supposed’ is a participle, not a bare infinitive",
-	"allot-of":    "‘allot’ is a verb; ‘a lot’ is a noun or adverb",
-
-	"whom_is":        "unlike ‘whom’, ‘who’ is the subject of ‘is’",
-	"whom_am":        "unlike ‘whom’, ‘who’ is the subject of ‘am’",
-	"whom_are":       "unlike ‘whom’, ‘who’ is the subject of ‘are’",
-	"whom_was":       "unlike ‘whom’, ‘who’ is the subject of ‘was’",
-	"whom_were":      "unlike ‘whom’, ‘who’ is the subject of ‘were’",
-	"whomever_is":    "unlike ‘whomever’, ‘whoever’ is the subject of ‘is’",
-	"whomever_was":   "unlike ‘whomever’, ‘whoever’ is the subject of ‘was’",
-	"whomsoever_is":  "unlike ‘whomsoever’, ‘whosoever’ is the subject of ‘is’",
-	"whomsoever_was": "unlike ‘whomsoever’, ‘whosoever’ is the subject of ‘was’",
-}
-
 type word *sequence.Word
 
 type ruleMatcher struct {
@@ -54,18 +21,14 @@ type ruleMatcher struct {
 	why     []string
 }
 
-func (r *ruleMatcher) Matched(reason string) {
-	_, ok := r.matched[reason]
+func (r *ruleMatcher) Matched(reasonID, reasonFull string) {
+	_, ok := r.matched[reasonID]
 	if ok {
 		// already matched
 		return
 	}
-	r.matched[reason] = struct{}{}
-	why := "[THERE WAS AN ERROR GENERATING AN EXPLANATION]"
-	if reasonText, ok := why_reason[reason]; ok {
-		why = reasonText
-	}
-	r.why = append(r.why, why)
+	r.matched[reasonID] = struct{}{}
+	r.why = append(r.why, reasonFull)
 }
 
 // DoAll repeatedly checks until nothing is detected

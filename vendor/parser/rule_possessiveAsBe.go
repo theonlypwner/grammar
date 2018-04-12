@@ -18,13 +18,18 @@ func (r *ruleMatcher) rule_possessiveAsBe(cur *sequence.Word) {
 	}
 
 	repl := "[ERROR]"
+	why := ""
 	switch cur.Lower {
+	// default: return
 	case "its":
 		repl = "it's"
+		why = "‘its’ is possessive; ‘it's’ means ‘it is’ or ‘it has’"
 	case "your":
 		repl = "you're"
+		why = "‘your’ is possessive; ‘you're’ means ‘you are’"
 	case "whose":
 		repl = "who's"
+		why = "‘whose’ is possessive; ‘who's’ means ‘who is’"
 	}
 
 	next1 := r.NextWord(1)
@@ -58,7 +63,7 @@ func (r *ruleMatcher) rule_possessiveAsBe(cur *sequence.Word) {
 		}
 	}
 
-	r.Matched(cur.Lower)
+	r.Matched(cur.Lower, why)
 	cur.ReplaceCap(repl)
 	next1.MarkCommon()
 }

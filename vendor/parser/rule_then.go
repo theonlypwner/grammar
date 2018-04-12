@@ -35,7 +35,7 @@ func (r *ruleMatcher) rule_then(cur *sequence.Word) {
 		}
 	}
 
-	r.Matched("then")
+	r.Matched("then", "unlike the adverb ‘then’, ‘than’ compares")
 	prev1.MarkCommon()
 	cur.Replace("than")
 }

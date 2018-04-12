@@ -24,7 +24,7 @@ func (r *ruleMatcher) rule_whoseBeen(cur *sequence.Word) {
 		return
 	}
 
-	r.Matched("whose_has")
+	r.Matched("whose_has", "‘whose’ is possessive; ‘who's’ means ‘who has’")
 	cur.ReplaceCap("who's")
 	next1.MarkCommon()
 }

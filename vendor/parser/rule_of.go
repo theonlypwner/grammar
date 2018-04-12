@@ -102,7 +102,7 @@ func (r *ruleMatcher) rule_of(cur *sequence.Word) {
 		}
 	}
 
-	r.Matched("of")
+	r.Matched("of", "‘of’ is not a verb like ‘have’ is")
 	prev1.MarkCommon()
 	r.PrevSpace(1).Replace("") // collapse space
 	cur.Replace("'ve")

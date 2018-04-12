@@ -71,7 +71,7 @@ func (r *ruleMatcher) rule_supposedTo(cur *sequence.Word, rerun *checkGroup) {
 		}
 	}
 
-	r.Matched("supposed-to")
+	r.Matched("supposed-to", "‘supposed’ is a participle, not a bare infinitive")
 	cur.MarkCommon()
 	r.NextWord(1).MarkCommon()
 	switch person {

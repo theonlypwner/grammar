@@ -28,7 +28,7 @@ func (r *ruleMatcher) rule_yourAre(cur *sequence.Word) {
 		return
 	}
 
-	r.Matched("your-are")
+	r.Matched("your-are", "‘your’ is a possessive determiner; ‘you’ is a pronoun")
 	cur.ReplaceCap("you")
 	next1.MarkCommon()
 }

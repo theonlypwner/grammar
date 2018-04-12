@@ -45,7 +45,7 @@ func (r *ruleMatcher) rule_thereOwn(cur *sequence.Word, rerun *checkGroup) {
 		return
 	}
 
-	r.Matched("there_their")
+	r.Matched("there_their", "‘there’ is not possessive, but ‘their’ is")
 	prev1.ReplaceCap("their")
 	cur.MarkCommon()
 	// Rerun: possessiveAsBe for "Its there own" -> "Its [their] own" -> "[(It's) their] own"

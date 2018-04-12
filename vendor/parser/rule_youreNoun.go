@@ -38,7 +38,7 @@ func (r *ruleMatcher) rule_youreNoun(cur *sequence.Word, rerun *checkGroup) {
 		}
 	}
 
-	r.Matched("your_po")
+	r.Matched("you're", "‘you're’ means ‘you are’; ‘your’ is possessive")
 	cur.ReplaceCap("your")
 	next1.MarkCommon()
 	// Rerun: possessiveAsBe for "your you're own" -> "your [your] own" -> "[(you're) your] own"

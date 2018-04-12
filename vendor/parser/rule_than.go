@@ -51,7 +51,7 @@ func (r *ruleMatcher) rule_than(cur *sequence.Word) {
 	case "but":
 	}
 
-	r.Matched("than")
+	r.Matched("than", "‘than’ compares, but ‘then’ is an adverb")
 	prev1.MarkCommon()
 	cur.Replace("then")
 }

@@ -19,7 +19,7 @@ func (r *ruleMatcher) rule_itsOwn(cur *sequence.Word, rerun *checkGroup) {
 		return
 	}
 
-	r.Matched("its_po")
+	r.Matched("it's", "‘it's’ means ‘it is’ or ‘it has’, but ‘its’ is possessive")
 	prev.ReplaceCap("its")
 	cur.MarkCommon()
 	// Rerun: possessiveAsBe for "its it's own" -> "its [its] own" -> "[(it's) its] own"

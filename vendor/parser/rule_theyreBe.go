@@ -57,13 +57,13 @@ func (r *ruleMatcher) rule_theyreBe(cur *sequence.Word) {
 	switch {
 	case next1.Lower == "is" ||
 		next1.Lower == "isn't":
-		r.Matched("theyre_be")
+		r.Matched("theyre_be", "‘they're’ means ‘they are’, not ‘there’")
 		cur.ReplaceCap("there's")
 		r.NextSpace(1).Replace("") // collapse space
 		next1.Replace("")          // delete next word (is)
 	case next1.IsCopula() ||
 		next1.IsModal():
-		r.Matched("theyre_are")
+		r.Matched("theyre_are", "‘they're’ means ‘they are’, not ‘they’ or ‘there’")
 		// they are being is OK, but there are being is NOT, but they can
 		// always replace there
 		cur.ReplaceCap("they") // cur.ReplaceCap("they/there")

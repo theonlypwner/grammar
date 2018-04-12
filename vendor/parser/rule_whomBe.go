@@ -2,6 +2,8 @@ package parser
 
 import (
 	"sequence"
+
+	"fmt"
 )
 
 /*
@@ -31,13 +33,15 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 	}
 
 	rule := cur.Lower
+	repl := ""
 
 	switch rule {
+	// default: return
 	case "whomever":
-		cur.ReplaceCap("whoever")
+		repl = "whoever"
 	case "whomsoever":
-		cur.ReplaceCap("whosoever")
-	default: // "whom"
+		repl = "whosoever"
+	case "whom":
 		if r.HasPrevInSentence(1) {
 			switch r.PrevWord(1).Lower {
 			case "i", "me", "myself":
@@ -60,7 +64,7 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 				// unknown person
 				return
 			}
-			cur.Replace("who")
+			repl = "who"
 		} else {
 			// Exception: "{Whom was} it from?"
 			// Exception: "{Whom were} they from?"
@@ -68,9 +72,10 @@ func (r *ruleMatcher) rule_whomBe(cur *sequence.Word) {
 		}
 	}
 
+	cur.ReplaceCap(repl)
 	next1.MarkCommon()
 	if next1.Lower != next1New {
 		next1.Replace(next1New)
 	}
-	r.Matched(rule + "_" + next1New)
+	r.Matched("whom", fmt.Sprintf("unlike ‘%v’, ‘%v’ is the subject of ‘%v’", rule, next1New))
 }

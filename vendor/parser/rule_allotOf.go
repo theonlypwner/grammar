@@ -19,7 +19,7 @@ func (r *ruleMatcher) rule_allotOf(cur *sequence.Word) {
 		return
 	}
 
-	r.Matched("allot-of")
+	r.Matched("allot-of", "‘allot’ is a verb; ‘a lot’ is a noun or adverb")
 	cur.ReplaceCap("a lot")
 	next.MarkCommon()
 }
