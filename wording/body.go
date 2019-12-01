@@ -28,6 +28,10 @@ var msgPrefixes = [...]msgPrefix{
 	{"I insist that", false},
 	{"I note that", false},
 	{"I state that", false},
+	{"I comment that", false},
+	{"I argue that", false},
+	{"I opine that", false},
+	{"I maintain that", false},
 	{"I noticed", true},
 	{"I discovered", true},
 	{"I see", true},
@@ -54,6 +58,8 @@ var msgPrefixes = [...]msgPrefix{
 	{"I suppose", true},
 	{"I suspect", true},
 	{"I feel", true},
+	{"I am of the opinion that", false},
+	{"it is in my opinion that", false},
 	{"it is my opinion that", false},
 	// sort of uncertain
 	{"I guess", true},
@@ -205,6 +211,13 @@ var msgLoaders = [...]msgLoader{
 		)
 		suffix := choice("invalid", "incorrect", "wrong", "erroneous", "unacceptable", "unsuitable") +
 			"; it should " + choice("be", "say", "read")
+		return prefix, suffix
+	},
+	func(secondPerson bool, c string) (string, string) {
+		prefix := fmt.Sprintf("I %v that ",
+			choice("suggest", "recommend"),
+		)
+		suffix := randInfinitiveVerb()
 		return prefix, suffix
 	},
 }
