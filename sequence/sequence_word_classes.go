@@ -344,3 +344,74 @@ func (w *Word) IsPossessivePronoun() bool {
 		return true
 	}
 }
+
+func (w *Word) FixParticiplePast() {
+	if newVerb, ok := fixPastToParticiple[w.Lower]; ok {
+		w.Replace(newVerb)
+	}
+}
+
+var fixPastToParticiple = map[string]string{
+	// "was": "been", // be
+	"went": "gone", // go
+	// "laid": "lain", // lay
+	// "lay":  "lain", // lie
+	// "lied": "lied", // lie
+	"showed": "shown", // show
+	"slew":   "slain", // slay
+	"have":   "had",   // have (typo)
+
+	"began":  "begun",  // begin
+	"drank":  "drunk",  // drink
+	"rang":   "rung",   // ring
+	"sang":   "sung",   // sing
+	"sank":   "sunk",   // sink
+	"sprang": "sprung", // spring
+	"swam":   "swum",   // swim
+
+	"arose": "arisen",  // arise
+	"drove": "driven",  // drive
+	"rode":  "ridden",  // ride
+	"rose":  "risen",   // rise
+	"wrote": "written", // write
+
+	"broke": "broken", // break
+	"chose": "chosen", // choose
+	"spoke": "spoken", // speak
+	"stole": "stolen", // steal
+	"woke":  "woken",  // wake
+
+	"fell":      "fallen",     // fall
+	"saw":       "seen",       // see
+	"see":       "seen",       // see (typo)
+	"shook":     "shaken",     // shake
+	"took":      "taken",      // take
+	"undertook": "undertaken", // undertake
+
+	"became":   "become",   // _
+	"came":     "come",     // _
+	"overcame": "overcome", // _
+	"ran":      "run",      // _
+
+	"ate":     "eaten",     // eat
+	"forbade": "forbidden", // forbid
+	"forgot":  "forgotten", // forget
+	"forgave": "forgiven",  // forgive
+	"froze":   "frozen",    // freeze
+	// "got": "gotten", // get (have got is sometimes a false positive)
+	"gave": "given",  // give
+	"hid":  "hidden", // hide
+
+	"bore":     "borne",     // bear
+	"beat":     "beaten",    // _
+	"blew":     "blown",     // blow
+	"did":      "done",      // do
+	"drew":     "drawn",     // draw
+	"flew":     "flown",     // fly
+	"grew":     "grown",     // grow
+	"knew":     "known",     // know
+	"tore":     "torn",      // tear
+	"threw":    "thrown",    // throw
+	"wore":     "worn",      // wear
+	"withdrew": "withdrawn", // withdraw
+}

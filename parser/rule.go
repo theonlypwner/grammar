@@ -98,7 +98,7 @@ func (r *ruleMatcher) doChecks(run checkGroup) (rerun checkGroup) {
 		case "supposed":
 			r.rule_supposedTo(cur, &rerun)
 		case "whom", "whomever", "whomsoever":
-			r.rule_whomBe(cur)
+			r.rule_whomModal(cur)
 		}
 	}
 	return

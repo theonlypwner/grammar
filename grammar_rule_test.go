@@ -235,11 +235,12 @@ func TestRule_of(t *testing.T) {
 	positive(t, "I could not of done it", "I could not['ve] done it")
 	positive(t, "I couldn't of done it", "I couldn't['ve] done it")
 	positive(t, "I could of went there", "I could['ve gone] there")
-	positive(t, "I could not of went there", "I could not['ve gone] there")
-	positive(t, "I could of not went there", "I could['ve] not [gone] there")
 	positive(t, "I would of done it", "I would['ve] done it")
 	positive(t, "I should of done it", "I should['ve] done it")
 	positive(t, "I must of done it", "I must['ve] done it")
+	// Fix past participles
+	positive(t, "I could not of went there", "I could not['ve gone] there")
+	positive(t, "I could of not went there", "I could['ve] not [gone] there")
 	// Exception 1
 	negative(t, "He could of course do")
 	// Exception 2
@@ -317,7 +318,7 @@ func TestRule_whomBe(t *testing.T) {
 	positive(t, "Whomsoever am a", "[Whosoever is] a")
 	positive(t, "Whomsoever be a", "[Whosoever is] a")
 	positive(t, "Whomsoever are a", "[Whosoever is] a")
-	// Correct improper verbs
+	// Correct improper modal verbs
 	positive(t, "I whom are", "I [who am]")
 	positive(t, "I whom were", "I [who was]")
 	positive(t, "a person whom are", "person [who is]")
@@ -325,6 +326,16 @@ func TestRule_whomBe(t *testing.T) {
 	positive(t, "people whom is", "people [who are]")
 	positive(t, "people whom was", "people [who were]")
 	positive(t, "You see me, whom is your friend.", "see me, [who am] your friend")
+	// Fix past participles
+	positive(t, "person whom has went", "person [who] has [gone]")
+	positive(t, "person whom has went there", "person [who] has [gone] there")
+	positive(t, "people whom have went", "people [who] have [gone]")
+	positive(t, "people whom have went there", "people [who] have [gone] there")
+	// Fix modal verbs and past participles
+	positive(t, "person whom have went", "person [who has gone]")
+	positive(t, "person whom have went there", "person [who has gone] there")
+	positive(t, "people whom has went", "people [who have gone]")
+	positive(t, "people whom has went there", "people [who have gone] there")
 	// REMOVED: Guess third-person singular if nothing precedes it
 	// positive(t, "Whom is it?", "[Who] is it?")
 	negative(t, "Whom is it for?")
