@@ -159,6 +159,12 @@ func TestRule_theirModal(t *testing.T) {
 	negative(t, "Those who know the difference between there/they're/their are.")
 	negative(t, "the difference between they're/there/their is")
 	negative(t, "Those who know the difference between they're/there/their are.")
+	// Exception 3
+	positive(t, "if their would, be there", "if [there] would, be there")
+	negative(t, "see their would be item")
+	negative(t, "their would be item is")
+	negative(t, "see their would-be item")
+	negative(t, "their would-be item is")
 	// Boundary check: _ (1)
 	negative(t, "their")
 	// Restriction: _ <modal>

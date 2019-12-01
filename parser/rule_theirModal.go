@@ -41,6 +41,18 @@ func (r *ruleMatcher) rule_theirModal(cur *sequence.Word) {
 		}
 	}
 
+	if r.HasNextCont(2) {
+		next2 := r.NextWord(2)
+		switch next1.Lower {
+		case "would":
+			// Exception 3: their would be
+			// actual: their would-be
+			if next2.Lower == "be" {
+				return
+			}
+		}
+	}
+
 	r.Matched("their_be", "‘their’ is possessive; ‘there’ is a pronoun or an adverb")
 	cur.ReplaceCap("there")
 	next1.MarkCommon()
