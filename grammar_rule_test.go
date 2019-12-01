@@ -151,6 +151,9 @@ func TestRule_theirModal(t *testing.T) {
 	negative(t, "their BE")
 	negative(t, "their ARE")
 	negative(t, "their MUST")
+	// Exception 1b
+	negative(t, "their Title")
+	negative(t, "their Title of Item")
 	// Exception 2
 	negative(t, "the difference between there/they're/their is")
 	negative(t, "Those who know the difference between there/they're/their are.")

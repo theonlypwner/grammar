@@ -20,7 +20,8 @@ func (r *ruleMatcher) rule_theirModal(cur *sequence.Word) {
 	}
 
 	// Exception 1: their <noun abbreviation>
-	if next1.Caps == sequence.WC_UPPER {
+	// Exception 1b: their <title of article>
+	if next1.Caps != sequence.WC_LOWER {
 		return
 	}
 
