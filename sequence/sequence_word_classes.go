@@ -92,7 +92,7 @@ func (w *Word) IsCopula() bool {
 		return false
 	case
 		"be", "is", "are", "isn't", "aren't",
-		"was", "wasn't":
+		"was", "were", "wasn't", "weren't":
 		return true
 	}
 }

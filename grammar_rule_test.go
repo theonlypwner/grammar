@@ -145,7 +145,26 @@ func TestRule_theirModal(t *testing.T) {
 	t.Parallel()
 
 	positive(t, "Their is", "[There] is")
+	positive(t, "Their wasn't", "[There] wasn't")
 	positive(t, "Their must be something!", "[There] must be something!")
+	// Fix verb
+	positive(t, "Their is people", "[There are] people")
+	positive(t, "Their are a person", "[There is] a person")
+	positive(t, "Their was persons", "[There were] persons")
+	positive(t, "Their were an item", "[There was] an item")
+	positive(t, "Their isn't people", "[There aren't] people")
+	positive(t, "Their aren't another", "[There isn't] another")
+	positive(t, "Their wasn't persons", "[There weren't] persons")
+	positive(t, "Their weren't anything", "[There wasn't] anything")
+	// Fix verb: nothing to fix
+	positive(t, "Their is nothing", "[There] is nothing")
+	positive(t, "Their are people", "[There] are people")
+	positive(t, "Their was something", "[There] was something")
+	positive(t, "Their were people", "[There] were people")
+	positive(t, "Their isn't anything", "[There] isn't anything")
+	positive(t, "Their aren't people", "[There] aren't people")
+	positive(t, "Their wasn't a person", "[There] wasn't a person")
+	positive(t, "Their weren't people", "[There] weren't people")
 	// Exception 1
 	negative(t, "their IS")
 	negative(t, "their BE")
