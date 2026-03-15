@@ -49,9 +49,16 @@ func (r *ruleMatcher) rule_whomModal(cur *sequence.Word) {
 		}
 	}
 
-	next1New := "was"
-	if whom == WHOM_PRESENT {
+	next1New := ""
+	switch whom {
+	case WHOM_PRESENT:
 		next1New = "is"
+	case WHOM_PAST:
+		next1New = "was"
+	case WHOM_PRESENT_HAS:
+		next1New = "has"
+	case WHOM_PAST_HAS:
+		next1New = "had"
 	}
 
 	rule := cur.Lower
@@ -83,14 +90,7 @@ func (r *ruleMatcher) rule_whomModal(cur *sequence.Word) {
 				}
 
 			case "person", "guy", "he", "him", "she", "her", "it":
-				switch whom {
-				case WHOM_PRESENT:
-					// next1New = "is" // already set
-				case WHOM_PAST:
-					// next1New = "was" // already set
-				case WHOM_PRESENT_HAS:
-					next1New = "has"
-				}
+				// already set
 
 			default:
 				// unknown person
